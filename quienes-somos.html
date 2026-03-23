@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga de Anotadores - Quienes Somos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos específicos para esta página si son necesarios */
+        .breadcrumb {
+            margin-bottom: 1rem;
+            color: #64748b;
+        }
+        .breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">⚾ LigaDeAnotadores<span>.com</span></div>
+        <div class="buscador">
+            <input type="text" placeholder="Buscar...">
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Resultados del fin de semana</a>
+        <a href="quienes-somos.html" class="active">Quienes somos</a>
+        <a href="monumental.html">Monumental</a>
+        <a href="#">...</a>
+    </nav>
+
+    <div class="hero">
+        <h1>Quiénes Somos</h1>
+        <p>Conoce nuestra historia, misión y el corazón de la liga</p>
+    </div>
+
+    <div class="quienes-somos-container">
+        <!-- Menú lateral -->
+        <aside class="sidebar-menu">
+            <div class="menu-item">
+                <div class="menu-principal">📜 Reseña histórica</div>
+                <ul class="submenu">
+                    <li><a href="#" onclick="mostrarContenido('mision')" id="link-mision">Misión</a></li>
+                    <li><a href="#" onclick="mostrarContenido('vision')" id="link-vision">Visión</a></li>
+                    <li><a href="#" onclick="mostrarContenido('reglas')" id="link-reglas">Reglas</a></li>
+                </ul>
+            </div>
+            
+            <div class="menu-condiciones">
+                <a href="#" onclick="mostrarContenido('condiciones')" id="link-condiciones">📋 Condiciones</a>
+            </div>
+        </aside>
+
+        <!-- Área de contenido dinámico -->
+        <main class="content-area" id="content-area">
+            <div class="breadcrumb">
+                <a href="index.html">Inicio</a> > <a href="quienes-somos.html">Quienes somos</a> > <span id="current-page">Reseña histórica</span>
+            </div>
+            
+            <!-- El contenido cambiará según la selección del usuario -->
+            <div id="dynamic-content">
+                <!-- Contenido por defecto: Reseña histórica -->
+                <div class="content-header">
+                    <span class="icon">📖</span>
+                    <h2>Reseña histórica</h2>
+                </div>
+                <div class="content-body">
+                    <p>La <strong>Liga de Anotadores</strong> nació en 2015 en el corazón de Venezuela, con la visión de crear un espacio dedicado exclusivamente a las ligas menores de béisbol. Lo que comenzó como un pequeño grupo de apasionados por el deporte que se reunían para anotar cada jugada, pronto se convirtió en una comunidad organizada.</p>
+                    
+                    <div class="highlight-box">
+                        <h4>🌟 Nuestro origen</h4>
+                        <p>Fundada por Carlos Mendoza y un equipo de 5 anotadores profesionales, la liga comenzó con apenas 8 equipos en el estado Aragua. Hoy, después de 10 años, contamos con más de 50 equipos afiliados en todo el territorio nacional.</p>
+                    </div>
+
+                    <p>A lo largo de los años hemos sido testigos del nacimiento de grandes promesas del béisbol venezolano. Más de 30 jugadores que pasaron por nuestras ligas menores ahora forman parte de organizaciones de MLB y LVBP.</p>
+
+                    <h4>📅 Línea de tiempo</h4>
+                    <ul>
+                        <li><strong>2015:</strong> Fundación de la liga con 8 equipos.</li>
+                        <li><strong>2017:</strong> Primera expansión a 20 equipos.</li>
+                        <li><strong>2019:</strong> Creación del programa de formación de anotadores.</li>
+                        <li><strong>2022:</strong> Digitalización de todas las estadísticas.</li>
+                        <li><strong>2024:</strong> Lanzamiento de nuestra plataforma web.</li>
+                    </ul>
+
+                    <p>Hoy, la Liga de Anotadores es referente en el béisbol menor venezolano, con un sistema de estadísticas en tiempo real y una comunidad de más de 500 anotadores certificados.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <h3>📞 Contactos</h3>
+        <p>📧 contacto@ligadeanotadores.com</p>
+        <p>📱 @ligadeanotadores (IG / X)</p>
+        <p>📞 +58 412-1234567</p>
+        <div class="redes">
+            <span>⚾ X</span>
+            <span>📷 Instagram</span>
+            <span>💬 Telegram</span>
+        </div>
+        <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.7;">© 2025 Liga de Anotadores - Béisbol menor de Venezuela</p>
+    </footer>
+
+    <script>
+        // Función para mostrar diferentes contenidos según la selección
+        function mostrarContenido(seccion) {
+            const contentDiv = document.getElementById('dynamic-content');
+            const currentPageSpan = document.getElementById('current-page');
+            
+            // Remover clase active de todos los links
+            document.querySelectorAll('.submenu a, .menu-condiciones a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Contenido dinámico
+            switch(seccion) {
+                case 'mision':
+                    document.getElementById('link-mision').classList.add('active');
+                    currentPageSpan.textContent = 'Misión';
+                    contentDiv.innerHTML = `
+                        <div class="content-header">
+                            <span class="icon">🎯</span>
+                            <h2>Misión</h2>
+                        </div>
+                        <div class="content-body">
+                            <p>Nuestra misión es <strong>fomentar, organizar y profesionalizar</strong> el béisbol menor en Venezuela, creando un entorno donde los jóvenes talentos puedan desarrollar sus habilidades y los anotadores puedan ejercer su labor con excelencia.</p>
+                            
+                            <div class="highlight-box">
+                                <h4>⚾ Nuestro compromiso</h4>
+                                <p>Proporcionar estadísticas precisas y en tiempo real de todas las ligas menores afiliadas, garantizando la transparencia y el crecimiento del deporte desde sus bases.</p>
+                            </div>
+
+                            <h4>🎯 Objetivos principales:</h4>
+                            <ul>
+                                <li>Registrar y publicar estadísticas de más de 500 juegos por temporada.</li>
+                                <li>Capacitar anotadores profesionales con los más altos estándares.</li>
+                                <li>Crear un puente entre las ligas menores y las organizaciones profesionales.</li>
+                                <li>Promover los valores del deporte: disciplina, respeto y trabajo en equipo.</li>
+                            </ul>
+
+                            <p>Trabajamos día a día para que cada joven pelotero tenga la oportunidad de ser visto, registrado y valorado.</p>
+                        </div>
+                    `;
+                    break;
+                
+                case 'vision':
+                    document.getElementById('link-vision').classList.add('active');
+                    currentPageSpan.textContent = 'Visión';
+                    contentDiv.innerHTML = `
+                        <div class="content-header">
+                            <span class="icon">🔭</span>
+                            <h2>Visión</h2>
+                        </div>
+                        <div class="content-body">
+                            <p>Ser la <strong>plataforma de referencia número uno</strong> en el béisbol menor de Venezuela y Latinoamérica, reconocida por la calidad de sus registros, la formación de anotadores y el impulso de talentos hacia el béisbol profesional.</p>
+                            
+                            <div class="highlight-box">
+                                <h4>🌎 Visión 2030</h4>
+                                <p>Para el año 2030, aspiramos a tener presencia en todos los estados de Venezuela y al menos 5 países de Latinoamérica, con más de 2000 anotadores certificados y un sistema de scouting integrado con organizaciones de MLB.</p>
+                            </div>
+
+                            <h4>✨ Metas a futuro:</h4>
+                            <ul>
+                                <li>Digitalizar el 100% de los registros históricos desde 2015.</li>
+                                <li>Crear la primera academia virtual de anotadores de béisbol.</li>
+                                <li>Establecer alianzas con todas las organizaciones de béisbol profesional en Venezuela y EEUU.</li>
+                                <li>Ser el semillero oficial de datos para la Liga Venezolana de Béisbol Profesional.</li>
+                            </ul>
+
+                            <p>Soñamos con un futuro donde ningún talento venezolano quede sin ser registrado y donde cada jugada cuente para el desarrollo de nuestros peloteros.</p>
+                        </div>
+                    `;
+                    break;
+                
+                case 'reglas':
+                    document.getElementById('link-reglas').classList.add('active');
+                    currentPageSpan.textContent = 'Reglas';
+                    contentDiv.innerHTML = `
+                        <div class="content-header">
+                            <span class="icon">📋</span>
+                            <h2>Reglas de la Liga</h2>
+                        </div>
+                        <div class="content-body">
+                            <p>La Liga de Anotadores se rige por un conjunto de normas que garantizan la integridad, transparencia y correcto desarrollo de todas las competiciones.</p>
+                            
+                            <h4>⚾ Reglas generales:</h4>
+                            <ul>
+                                <li><strong>Edades:</strong> Categorías: Pre-infantil (7-9), Infantil (10-12), Pre-juvenil (13-15), Juvenil (16-18) y Adulto (19+).</li>
+                                <li><strong>Equipos:</strong> Máximo 20 jugadores por roster, mínimo 12 para iniciar un juego.</li>
+                                <li><strong>Duración:</strong> 7 entradas para categorías menores, 9 para adulto.</li>
+                                <li><strong>Sustituciones:</strong> Libre, pero una vez reemplazado un jugador no puede reingresar.</li>
+                            </ul>
+
+                            <h4>📊 Reglas para anotadores:</h4>
+                            <ul>
+                                <li>Todo juego oficial debe tener al menos un anotador certificado presente.</li>
+                                <li>Las planillas deben ser entregadas digitalmente dentro de las 24 horas posteriores al juego.</li>
+                                <li>Cada jugada debe ser registrada con el formato oficial de anotación de béisbol.</li>
+                                <li>Los anotadores deben asistir a un curso de actualización cada 2 años.</li>
+                            </ul>
+
+                            <div class="highlight-box">
+                                <h4>📌 Código de ética</h4>
+                                <p>Todo miembro de la liga (jugadores, entrenadores, anotadores) debe mantener una conducta respetuosa dentro y fuera del campo. El uso de lenguaje ofensivo, violencia o acciones antideportivas será sancionado según la gravedad (suspensión o expulsión permanente).</p>
+                            </div>
+
+                            <h4>🏆 Reglas de campeonato:</h4>
+                            <ul>
+                                <li>Sistema de liga regular más playoffs.</li>
+                                <li>Puntuación: 2 puntos por victoria, 1 punto por empate (si aplica), 0 por derrota.</li>
+                                <li>Desempates: 1) enfrentamiento directo, 2) diferencia de carreras, 3) sorteo.</li>
+                            </ul>
+                        </div>
+                    `;
+                    break;
+                
+                case 'condiciones':
+                    document.getElementById('link-condiciones').classList.add('active');
+                    currentPageSpan.textContent = 'Condiciones';
+                    contentDiv.innerHTML = `
+                        <div class="content-header">
+                            <span class="icon">⚖️</span>
+                            <h2>Condiciones y Términos</h2>
+                        </div>
+                        <div class="content-body">
+                            <p>Al formar parte de la Liga de Anotadores, ya sea como equipo, jugador, entrenador o anotador, aceptas las siguientes condiciones:</p>
+                            
+                            <h4>📝 Condiciones generales:</h4>
+                            <ul>
+                                <li><strong>Afiliación:</strong> Todo equipo debe registrar su roster antes del inicio de cada temporada y pagar la cuota correspondiente.</li>
+                                <li><strong>Seguros:</strong> La liga provee seguro básico de accidentes para todos los jugadores registrados (cubre lesiones durante juegos oficiales).</li>
+                                <li><strong>Uso de imagen:</strong> Al registrarse, los equipos y jugadores autorizan el uso de su imagen para fines promocionales y estadísticos de la liga.</li>
+                                <li><strong>Propiedad intelectual:</strong> Todas las estadísticas generadas son propiedad de la Liga de Anotadores y pueden ser utilizadas con fines comerciales previa autorización.</li>
+                            </ul>
+
+                            <h4>💻 Condiciones de uso del sitio web:</h4>
+                            <ul>
+                                <li>El contenido de este sitio es solo para fines informativos y estadísticos.</li>
+                                <li>No está permitido copiar, redistribuir o vender los datos sin consentimiento expreso.</li>
+                                <li>Los usuarios registrados son responsables de la confidencialidad de sus credenciales.</li>
+                            </ul>
+
+                            <div class="highlight-box">
+                                <h4>⚠️ Importante</h4>
+                                <p>La Liga de Anotadores se reserva el derecho de admisión y permanencia de cualquier equipo o miembro que no cumpla con las normas establecidas. Las decisiones del comité disciplinario son inapelables.</p>
+                            </div>
+
+                            <h4>📅 Renovación y pagos:</h4>
+                            <ul>
+                                <li>La temporada anual va de enero a diciembre.</li>
+                                <li>La cuota de afiliación debe pagarse antes del 31 de enero.</li>
+                                <li>Pagos aceptados: transferencia, pago móvil y efectivo en las sedes autorizadas.</li>
+                            </ul>
+
+                            <p><em>Última actualización: Marzo 2025</em></p>
+                        </div>
+                    `;
+                    break;
+                    
+                default:
+                    // Reseña histórica (por defecto)
+                    currentPageSpan.textContent = 'Reseña histórica';
+                    contentDiv.innerHTML = `
+                        <div class="content-header">
+                            <span class="icon">📖</span>
+                            <h2>Reseña histórica</h2>
+                        </div>
+                        <div class="content-body">
+                            <p>La <strong>Liga de Anotadores</strong> nació en 2015 en el corazón de Venezuela, con la visión de crear un espacio dedicado exclusivamente a las ligas menores de béisbol. Lo que comenzó como un pequeño grupo de apasionados por el deporte que se reunían para anotar cada jugada, pronto se convirtió en una comunidad organizada.</p>
+                            
+                            <div class="highlight-box">
+                                <h4>🌟 Nuestro origen</h4>
+                                <p>Fundada por Carlos Mendoza y un equipo de 5 anotadores profesionales, la liga comenzó con apenas 8 equipos en el estado Aragua. Hoy, después de 10 años, contamos con más de 50 equipos afiliados en todo el territorio nacional.</p>
+                            </div>
+
+                            <p>A lo largo de los años hemos sido testigos del nacimiento de grandes promesas del béisbol venezolano. Más de 30 jugadores que pasaron por nuestras ligas menores ahora forman parte de organizaciones de MLB y LVBP.</p>
+
+                            <h4>📅 Línea de tiempo</h4>
+                            <ul>
+                                <li><strong>2015:</strong> Fundación de la liga con 8 equipos.</li>
+                                <li><strong>2017:</strong> Primera expansión a 20 equipos.</li>
+                                <li><strong>2019:</strong> Creación del programa de formación de anotadores.</li>
+                                <li><strong>2022:</strong> Digitalización de todas las estadísticas.</li>
+                                <li><strong>2024:</strong> Lanzamiento de nuestra plataforma web.</li>
+                            </ul>
+
+                            <p>Hoy, la Liga de Anotadores es referente en el béisbol menor venezolano, con un sistema de estadísticas en tiempo real y una comunidad de más de 500 anotadores certificados.</p>
+                        </div>
+                    `;
+            }
+        }
+
+        // Cargar reseña histórica por defecto al iniciar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // No es necesario llamar a mostrarContenido porque ya está la reseña en el HTML
+            // Pero podemos marcar el link activo
+            // Como es la reseña histórica, no hay un link directo, así que no marcamos ninguno
+            console.log('Página Quienes Somos cargada');
+        });
+    </script>
+</body>
+</html>

@@ -43,9 +43,11 @@ header {
 }
 
 .logo-img {
-    height: 65px;
-    width: auto;
+    height: 45px;
+    width: 45px;
+    object-fit: contain;
     display: block;
+    max-width: 100%;
 }
 
 .logo-text {
@@ -56,6 +58,13 @@ header {
 .logo-text span {
     color: var(--secondary-blue);
     font-weight: 300;
+}
+
+@media (max-width: 768px) {
+    .logo-img {
+        height: 40px;
+        width: 40px;
+    }
 }
 
 /* Buscador */

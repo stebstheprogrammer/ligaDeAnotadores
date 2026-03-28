@@ -3,92 +3,668 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liga de Anotadores - Inicio</title>
+    <title>Liga de Anotadores - Noticias del Béisbol Menor</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos específicos para el portal de noticias */
+        .hero {
+            background: linear-gradient(145deg, var(--primary-blue), #0066cc);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        /* Sección de noticias destacadas */
+        .destacados {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .destacados h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            border-left: 8px solid var(--primary-blue);
+            padding-left: 1.5rem;
+            color: var(--black);
+        }
+
+        .noticia-principal {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: 0.3s;
+        }
+
+        .noticia-principal:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,128,255,0.15);
+            border-color: var(--primary-blue);
+        }
+
+        .noticia-principal-imagen {
+            background: linear-gradient(145deg, var(--secondary-blue), #b0f5ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            min-height: 300px;
+        }
+
+        .noticia-principal-contenido {
+            padding: 2rem;
+        }
+
+        .categoria-tag {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .noticia-principal-contenido h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--black);
+        }
+
+        .noticia-principal-contenido .resumen {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .fecha {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-leer-mas {
+            display: inline-block;
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-leer-mas:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* Grid de noticias */
+        .grid-noticias {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card-noticia {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            transition: 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .card-noticia:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,128,255,0.12);
+            border-color: var(--primary-blue);
+        }
+
+        .card-imagen {
+            background: linear-gradient(145deg, var(--secondary-blue), #e0f7ff);
+            padding: 2rem;
+            text-align: center;
+            font-size: 3rem;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-contenido {
+            padding: 1.5rem;
+        }
+
+        .card-contenido h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--black);
+            line-height: 1.4;
+        }
+
+        .card-contenido .resumen {
+            color: #4b5563;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .card-footer-noticia {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 1rem;
+        }
+
+        .leer-mas {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .leer-mas:hover {
+            text-decoration: underline;
+        }
+
+        /* Sección de jugadores destacados */
+        .jugadores-destacados {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .jugadores-destacados h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            border-left: 8px solid var(--primary-blue);
+            padding-left: 1.5rem;
+            color: var(--black);
+        }
+
+        .jugadores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card-jugador {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            transition: 0.3s;
+        }
+
+        .card-jugador:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 10px 25px rgba(0,128,255,0.1);
+        }
+
+        .avatar-jugador {
+            background: var(--secondary-blue);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 3rem;
+        }
+
+        .card-jugador h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .equipo-jugador {
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-jugador {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-valor {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .ver-perfil {
+            display: inline-block;
+            background: transparent;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .ver-perfil:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* Sección de jugadas destacadas */
+        .jugadas-destacadas {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .jugadas-destacadas h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            border-left: 8px solid var(--primary-blue);
+            padding-left: 1.5rem;
+            color: var(--black);
+        }
+
+        .jugadas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card-jugada {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            transition: 0.3s;
+        }
+
+        .card-jugada:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+        }
+
+        .video-placeholder {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .jugada-info {
+            padding: 1.2rem;
+        }
+
+        .jugada-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .jugada-info p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .noticia-principal {
+                grid-template-columns: 1fr;
+            }
+            
+            .noticia-principal-imagen {
+                min-height: 200px;
+            }
+            
+            .noticia-principal-contenido h3 {
+                font-size: 1.4rem;
+            }
+            
+            .grid-noticias {
+                grid-template-columns: 1fr;
+            }
+            
+            .jugadores-grid, .jugadas-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Resultados del fin de semana */
+.resultados-semana {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 1rem 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid #e5e7eb;
+}
+
+.resultados-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--secondary-blue);
+}
+
+.resultados-icono {
+    font-size: 2rem;
+}
+
+.resultados-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin: 0;
+    flex: 1;
+}
+
+.resultados-fecha {
+    background: var(--secondary-blue);
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--black);
+}
+
+.resultados-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.resultado-item {
+    padding: 0.8rem 1rem;
+    background: #f8fafc;
+    border-radius: 10px;
+    transition: 0.2s;
+    border: 1px solid #e5e7eb;
+}
+
+.resultado-item:hover {
+    background: white;
+    border-color: var(--primary-blue);
+    transform: translateX(5px);
+}
+
+.resultado-equipos {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.equipo-local, .equipo-visitante {
+    flex: 1;
+}
+
+.equipo-local {
+    text-align: right;
+    color: var(--black);
+}
+
+.equipo-visitante {
+    text-align: left;
+    color: var(--black);
+}
+
+.resultado-marcador {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--primary-blue);
+    background: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 8px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.resultado-guion {
+    font-weight: 800;
+    color: #64748b;
+}
+
+.resultado-detalle {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid var(--secondary-blue);
+}
+
+.resultados-footer {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 0.5rem;
+}
+
+.ver-todos {
+    display: inline-block;
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+
+.ver-todos:hover {
+    transform: translateX(5px);
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .resultados-semana {
+        margin: 1rem;
+        padding: 1rem;
+    }
+    
+    .resultados-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .resultado-equipos {
+        justify-content: center;
+    }
+    
+    .equipo-local, .equipo-visitante {
+        flex: 0 1 auto;
+    }
+}
+    </style>
 </head>
 <body>
     <header>
-        <div class="logo">⚾ LigaDeAnotadores<span>.com</span></div>
+        <div class="logo">
+            <img src="img/logo.png" alt="Liga de Anotadores" class="logo-img">
+            <div class="logo-text">
+                Liga de Anotadores<span></span>
+            </div>
+        </div>
         <div class="buscador">
             <input type="text" placeholder="Buscar...">
         </div>
     </header>
-
+    
     <nav>
-        <a href="index.html" class="active">Resultados del fin de semana</a>
+        <a href="index.html" class="active">Inicio</a>
         <a href="quienes-somos.html">Quienes somos</a>
-        <a href="monumental.html">Ligas</a>
-        <a href="#">...</a>
+        <a href="liga.html">Liga</a>
+        <a href="#">Resultados</a>
+        <a href="#">Estadísticas</a>
     </nav>
+        <div class="resultados-semana">
+        <div class="resultados-header">
+            <span class="resultados-icono">⚾</span>
+            <h3>Resultados del fin de semana</h3>
+            <span class="resultados-fecha">27-28 Mar 2025</span>
+        </div>
+        <div class="resultados-grid">
+            <div class="resultado-item">
+                <div class="resultado-equipos">
+                    <span class="equipo-local">Potros de Bolívar</span>
+                    <span class="resultado-marcador">4</span>
+                    <span class="resultado-guion">-</span>
+                    <span class="resultado-marcador">2</span>
+                    <span class="equipo-visitante">Lideres de Caracas</span>
+                </div>
+                <div class="resultado-detalle">🏟️ Estadio Monumental | 7 innings</div>
+            </div>
+            <div class="resultado-item">
+                <div class="resultado-equipos">
+                    <span class="equipo-local">Bravos de Miranda</span>
+                    <span class="resultado-marcador">5</span>
+                    <span class="resultado-guion">-</span>
+                    <span class="resultado-marcador">3</span>
+                    <span class="equipo-visitante">Caciques de Vargas</span>
+                </div>
+                <div class="resultado-detalle">🌟 HR de Luis González en la 6ta</div>
+            </div>
+            <div class="resultado-item">
+                <div class="resultado-equipos">
+                    <span class="equipo-local">Guerreros de Aragua</span>
+                    <span class="resultado-marcador">7</span>
+                    <span class="resultado-guion">-</span>
+                    <span class="resultado-marcador">5</span>
+                    <span class="equipo-visitante">Titanes de La Guaira</span>
+                </div>
+                <div class="resultado-detalle">🔥 Rally de 4 carreras en la 8va</div>
+            </div>
+            <div class="resultado-item">
+                <div class="resultado-equipos">
+                    <span class="equipo-local">Universidad Central</span>
+                    <span class="resultado-marcador">6</span>
+                    <span class="resultado-guion">-</span>
+                    <span class="resultado-marcador">4</span>
+                    <span class="equipo-visitante">USB</span>
+                </div>
+                <div class="resultado-detalle">📊 Torneo Juvenil UCV</div>
+            </div>
+            <div class="resultado-item">
+                <div class="resultado-equipos">
+                    <span class="equipo-local">Vecinos Unidos</span>
+                    <span class="resultado-marcador">3</span>
+                    <span class="resultado-guion">-</span>
+                    <span class="resultado-marcador">2</span>
+                    <span class="equipo-visitante">San Bernardino</span>
+                </div>
+                <div class="resultado-detalle">⚡ Extra innings (10 entradas)</div>
+            </div>
+        </div>
+        <div class="resultados-footer">
+            <a href="#" class="ver-todos">Ver todos los resultados →</a>
+        </div>
+    </div>
+    
 
     <div class="hero">
-        <h1>Tu voz en las ligas menores</h1>
-        <p>Noticias, análisis y pasión por el béisbol venezolano</p>
+        <h1>Liga de Anotadores</h1>
+        <p>Noticias, resultados y estadísticas del béisbol menor venezolano</p>
     </div>
 
     <main>
-        <section class="cards-section">
-            <h2>⚡ Lo último en la liga</h2>
-            <div class="cards-grid">
-                <!-- Tarjeta 1 - Noticias de interés -->
-                <div class="card">
-                    <div class="card-image">📰</div>
-                    <div class="card-content">
-                        <h3>Noticias de interés</h3>
-                        <p>Todo sobre tus equipos favoritos, cambios de roster, fechas especiales y más.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span class="badge">#Actualidad</span>
-                    </div>
+        <!-- Noticia Principal Destacada -->
+        <section class="destacados">
+            <h2>⚡ Noticia Destacada</h2>
+            <div class="noticia-principal">
+                <div class="noticia-principal-imagen">
+                    🏆⚾
                 </div>
+                <div class="noticia-principal-contenido">
+                    <span class="categoria-tag">Resultados</span>
+                    <h3>Potros de Bolívar vencieron 4-2 a Lideres de Caracas en emocionante encuentro</h3>
+                    <div class="fecha">📅 27 de marzo, 2025 | 🏟️ Estadio Monumental</div>
+                    <p class="resumen">En un partido lleno de emociones, los Potros de Bolívar lograron imponerse a los líderes de la tabla gracias a un jonrón de Carlos Pérez en la séptima entrada. Con este resultado, los Potros se colocan a solo 2 juegos del primer lugar.</p>
+                    <a href="#" class="btn-leer-mas">Leer noticia completa →</a>
+                </div>
+            </div>
+        </section>
 
-                <!-- Tarjeta 2 - Jugadores destacados -->
-                <div class="card">
-                    <div class="card-image">🌟</div>
-                    <div class="card-content">
-                        <h3>Jugadores destacados</h3>
-                        <p>Las promesas, los líderes y las figuras que están marcando la diferencia.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span class="badge">#Estrellas</span>
-                    </div>
-                </div>
+        <!-- Grid de Noticias Recientes -->
+        <section class="destacados">
+            <h2>📰 Últimas Noticias</h2>
+            <div class="grid-noticias" id="noticias-recientes">
+                <!-- Se llena con JavaScript -->
+            </div>
+        </section>
 
-                <!-- Tarjeta 3 - Jugadas -->
-                <div class="card">
-                    <div class="card-image">🎬</div>
-                    <div class="card-content">
-                        <h3>Jugadas</h3>
-                        <p>Los mejores momentos, robos, ponches, cuadrangulares y atrapadas.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span class="badge">#Highlights</span>
-                    </div>
-                </div>
+        <!-- Jugadores Destacados -->
+        <section class="jugadores-destacados">
+            <h2>🌟 Jugadores Destacados</h2>
+            <div class="jugadores-grid" id="jugadores-destacados">
+                <!-- Se llena con JavaScript -->
+            </div>
+        </section>
 
-                <!-- Tarjeta 4 - Opinión de jugadas en ligas importantes -->
-                <div class="card">
-                    <div class="card-image">🗣️</div>
-                    <div class="card-content">
-                        <h3>Análisis táctico</h3>
-                        <p>Mirada experta a las jugadas clave de las ligas importantes.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span class="badge">#Opinión</span>
-                    </div>
-                </div>
+        <!-- Jugadas Destacadas -->
+        <section class="jugadas-destacadas">
+            <h2>🎬 Jugadas de la Semana</h2>
+            <div class="jugadas-grid" id="jugadas-destacadas">
+                <!-- Se llena con JavaScript -->
+            </div>
+        </section>
 
-                <!-- Tarjeta 5 - Mención de campeonatos importantes -->
-                <div class="card">
-                    <div class="card-image">🏆</div>
-                    <div class="card-content">
-                        <h3>Campeonatos</h3>
-                        <p>Calendario, resultados y crónicas de los torneos más relevantes.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span class="badge">#Títulos</span>
-                    </div>
-                </div>
+        <!-- Opinión sobre ligas importantes -->
+        <section class="destacados">
+            <h2>🗣️ Opinión</h2>
+            <div class="grid-noticias" id="opiniones">
+                <!-- Se llena con JavaScript -->
+            </div>
+        </section>
+
+        <!-- Campeonatos importantes -->
+        <section class="destacados">
+            <h2>🏆 Campeonatos en Curso</h2>
+            <div class="grid-noticias" id="campeonatos">
+                <!-- Se llena con JavaScript -->
             </div>
         </section>
     </main>
@@ -107,7 +683,279 @@
     </footer>
 
     <script>
-        console.log('⚾ Página de Liga de Anotadores lista!');
+        // Datos de noticias
+        const noticias = [
+            {
+                titulo: "Carlos Pérez conecta su home run número 10 de la temporada",
+                resumen: "El bateador de los Potros de Bolívar sigue rompiendo récords y se consolida como líder de cuadrangulares en la Liga Monumental.",
+                categoria: "Jugadores",
+                fecha: "26 Mar 2025",
+                icono: "⚾"
+            },
+            {
+                titulo: "Bravos de Miranda 5 - 3 Caciques de Vargas: Reporte completo",
+                resumen: "Los Bravos lograron una importante victoria en casa gracias a una actuación destacada de su lanzador abridor.",
+                categoria: "Resultados",
+                fecha: "26 Mar 2025",
+                icono: "📊"
+            },
+            {
+                titulo: "Guerreros de Aragua sorprenden a Titanes con rally de 4 carreras",
+                resumen: "En la parte baja de la octava entrada, los Guerreros remontaron un marcador adverso para llevarse la victoria 7-5.",
+                categoria: "Resultados",
+                fecha: "25 Mar 2025",
+                icono: "🔥"
+            },
+            {
+                titulo: "Lanzador del mes: Ramón García (Lideres de Caracas)",
+                resumen: "El derecho de 19 años registró 4 victorias, 1.85 de efectividad y 52 ponches en el mes de marzo.",
+                categoria: "Reconocimientos",
+                fecha: "25 Mar 2025",
+                icono: "🏆"
+            },
+            {
+                titulo: "Próxima jornada: Clásico entre Lideres y Potros este sábado",
+                resumen: "El encuentro más esperado de la semana se jugará en el Estadio Monumental con entradas agotadas.",
+                categoria: "Previa",
+                fecha: "24 Mar 2025",
+                icono: "📅"
+            },
+            {
+                titulo: "Torneo Intervecinal: Conoce los equipos clasificados a semifinales",
+                resumen: "Vecinos Unidos, San Bernardino, La Candelaria y El Paraíso disputarán el pase a la gran final.",
+                categoria: "Torneos",
+                fecha: "24 Mar 2025",
+                icono: "🏅"
+            }
+        ];
+
+        // Datos de jugadores destacados
+        const jugadoresDestacados = [
+            {
+                nombre: "Carlos Pérez",
+                equipo: "Potros de Bolívar",
+                posicion: "Jardinero",
+                stats: { avg: ".425", hr: "10", rbi: "32" },
+                avatar: "⚾"
+            },
+            {
+                nombre: "Ramón García",
+                equipo: "Lideres de Caracas",
+                posicion: "Lanzador",
+                stats: { era: "1.85", w: "7", so: "52" },
+                avatar: "🔥"
+            },
+            {
+                nombre: "Luis González",
+                equipo: "Bravos de Miranda",
+                posicion: "Bateador Designado",
+                stats: { avg: ".398", hr: "8", rbi: "28" },
+                avatar: "🦇"
+            },
+            {
+                nombre: "José Rodríguez",
+                equipo: "Caciques de Vargas",
+                posicion: "Shortstop",
+                stats: { avg: ".385", hr: "7", rbi: "24" },
+                avatar: "⭐"
+            }
+        ];
+
+        // Datos de jugadas destacadas
+        const jugadasDestacadas = [
+            {
+                titulo: "Atrapada espectacular de Juan Pérez en el jardín central",
+                descripcion: "Una atrapada de pelota de ensueño que salvó 2 carreras en el juego contra Titanes.",
+                torneo: "Monumental",
+                icono: "🎯"
+            },
+            {
+                titulo: "Robo de base en la séptima entrada que cambió el juego",
+                descripcion: "Carlos López robó tercera y luego anotó la carrera del empate.",
+                torneo: "Juvenil UCV",
+                icono: "🏃"
+            },
+            {
+                titulo: "Doble play imposible de los Guerreros de Aragua",
+                descripcion: "Una jugada de ensueño entre el shortstop y la segunda base que dejó a dos corredores en el camino.",
+                torneo: "Intervecinal",
+                icono: "🔄"
+            },
+            {
+                titulo: "Jonrón de 3 carreras para dar la vuelta al marcador",
+                descripcion: "En la parte baja de la novena, Miguel Sánchez conectó un batazo que se fue del parque.",
+                torneo: "Limenor",
+                icono: "🏆"
+            }
+        ];
+
+        // Datos de opiniones
+        const opiniones = [
+            {
+                titulo: "Análisis: ¿Por qué los Potros son favoritos al título?",
+                resumen: "El equipo cuenta con la mejor rotación de abridores y un lineup profundo que puede hacer daño en cualquier momento.",
+                autor: "Carlos Mendoza",
+                icono: "🗣️"
+            },
+            {
+                titulo: "El futuro del béisbol menor está en los anotadores",
+                resumen: "La labor de los anotadores es fundamental para el desarrollo de los jóvenes talentos en Venezuela.",
+                autor: "Ana Rodríguez",
+                icono: "📝"
+            },
+            {
+                titulo: "5 jugadores a seguir en la segunda mitad de la temporada",
+                resumen: "Estos jóvenes prometen dar mucho de qué hablar en los próximos meses.",
+                autor: "Equipo LigaDeAnotadores",
+                icono: "⭐"
+            }
+        ];
+
+        // Datos de campeonatos
+        const campeonatos = [
+            {
+                titulo: "Liga Monumental - Fase Regular",
+                resumen: "Lideres de Caracas lidera la tabla con 18-6. Los Potros y Bravos pelean por el segundo lugar.",
+                estado: "En curso",
+                icono: "🏆"
+            },
+            {
+                titulo: "Torneo Juvenil UCV - Semifinales",
+                resumen: "Universidad Central vs USB y UCAB vs UNIMET disputarán el pase a la final.",
+                estado: "Playoffs",
+                icono: "🎓"
+            },
+            {
+                titulo: "Softball Chato Candela - Gran Final",
+                resumen: "Chato Candela A se enfrenta a Chato Candela B en una final de infarto.",
+                estado: "Final",
+                icono: "🥎"
+            }
+        ];
+
+        // Renderizar noticias
+        function renderizarNoticias() {
+            const container = document.getElementById('noticias-recientes');
+            container.innerHTML = '';
+            
+            noticias.forEach(noticia => {
+                container.innerHTML += `
+                    <div class="card-noticia">
+                        <div class="card-imagen">${noticia.icono}</div>
+                        <div class="card-contenido">
+                            <span class="categoria-tag" style="background: var(--secondary-blue); color: var(--primary-blue);">${noticia.categoria}</span>
+                            <h3>${noticia.titulo}</h3>
+                            <div class="fecha" style="margin-top: 0.5rem;">📅 ${noticia.fecha}</div>
+                            <p class="resumen">${noticia.resumen}</p>
+                            <div class="card-footer-noticia">
+                                <a href="#" class="leer-mas">Leer más →</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Renderizar jugadores destacados
+        function renderizarJugadores() {
+            const container = document.getElementById('jugadores-destacados');
+            container.innerHTML = '';
+            
+            jugadoresDestacados.forEach(jugador => {
+                container.innerHTML += `
+                    <div class="card-jugador">
+                        <div class="avatar-jugador">${jugador.avatar}</div>
+                        <h3>${jugador.nombre}</h3>
+                        <div class="equipo-jugador">${jugador.equipo}</div>
+                        <div class="stats-jugador">
+                            ${Object.entries(jugador.stats).map(([key, val]) => `
+                                <div class="stat">
+                                    <div class="stat-valor">${val}</div>
+                                    <div class="stat-label">${key.toUpperCase()}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <a href="#" class="ver-perfil">Ver perfil →</a>
+                    </div>
+                `;
+            });
+        }
+
+        // Renderizar jugadas destacadas
+        function renderizarJugadas() {
+            const container = document.getElementById('jugadas-destacadas');
+            container.innerHTML = '';
+            
+            jugadasDestacadas.forEach(jugada => {
+                container.innerHTML += `
+                    <div class="card-jugada">
+                        <div class="video-placeholder">
+                            ${jugada.icono} 🎬 Ver jugada
+                        </div>
+                        <div class="jugada-info">
+                            <h3>${jugada.titulo}</h3>
+                            <p>${jugada.descripcion}</p>
+                            <div class="fecha" style="margin-top: 0.5rem;">🏆 ${jugada.torneo}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Renderizar opiniones
+        function renderizarOpiniones() {
+            const container = document.getElementById('opiniones');
+            container.innerHTML = '';
+            
+            opiniones.forEach(opinion => {
+                container.innerHTML += `
+                    <div class="card-noticia">
+                        <div class="card-imagen">${opinion.icono}</div>
+                        <div class="card-contenido">
+                            <h3>${opinion.titulo}</h3>
+                            <div class="fecha" style="margin-top: 0.5rem;">✍️ ${opinion.autor}</div>
+                            <p class="resumen">${opinion.resumen}</p>
+                            <div class="card-footer-noticia">
+                                <a href="#" class="leer-mas">Leer opinión →</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Renderizar campeonatos
+        function renderizarCampeonatos() {
+            const container = document.getElementById('campeonatos');
+            container.innerHTML = '';
+            
+            campeonatos.forEach(campeonato => {
+                container.innerHTML += `
+                    <div class="card-noticia">
+                        <div class="card-imagen">${campeonato.icono}</div>
+                        <div class="card-contenido">
+                            <span class="categoria-tag" style="background: gold; color: #333;">${campeonato.estado}</span>
+                            <h3>${campeonato.titulo}</h3>
+                            <p class="resumen">${campeonato.resumen}</p>
+                            <div class="card-footer-noticia">
+                                <a href="#" class="leer-mas">Ver detalles →</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            renderizarNoticias();
+            renderizarJugadores();
+            renderizarJugadas();
+            renderizarOpiniones();
+            renderizarCampeonatos();
+            
+            console.log('🏆 Portal de noticias de Liga de Anotadores cargado');
+        });
     </script>
 </body>
 </html>

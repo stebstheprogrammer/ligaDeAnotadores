@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga de Anotadores - Liga</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos específicos para la página Liga */
+        .liga-container {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            gap: 2rem;
+        }
+
+        /* Sidebar de categorías con acordeón */
+        .categorias-sidebar {
+            flex: 1;
+            min-width: 280px;
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            height: fit-content;
+        }
+
+        .categorias-sidebar h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Estilos para acordeón */
+        .acordeon-item {
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .acordeon-header {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .acordeon-header:hover {
+            background: var(--secondary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .acordeon-header.active {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        .acordeon-header .flecha {
+            transition: transform 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .acordeon-header.active .flecha {
+            transform: rotate(180deg);
+        }
+
+        .acordeon-contenido {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .acordeon-contenido.show {
+            max-height: 500px;
+            transition: max-height 0.3s ease-in;
+        }
+
+        .categorias-lista {
+            list-style: none;
+            padding: 0.8rem;
+        }
+
+        .categorias-lista li {
+            margin-bottom: 0.5rem;
+        }
+
+        .categorias-lista a {
+            display: block;
+            text-decoration: none;
+            color: var(--black);
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .categorias-lista a:hover {
+            background: var(--secondary-blue);
+            padding-left: 1rem;
+        }
+
+        .categorias-lista a.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* Selector de temporadas */
+        .selector-temporadas {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .temporada-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.2s;
+            flex: 1;
+        }
+
+        .temporada-btn:hover {
+            background: var(--secondary-blue);
+            color: var(--primary-blue);
+        }
+
+        .temporada-btn.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* Área de contenido principal */
+        .liga-content {
+            flex: 3;
+            min-width: 300px;
+        }
+
+        /* Sub-navegación principal */
+        .subnav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .subnav-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.2s;
+            flex: 1;
+        }
+
+        .subnav-btn:hover {
+            background: var(--secondary-blue);
+            color: var(--primary-blue);
+        }
+
+        .subnav-btn.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* Sub-navegación secundaria (para Bateo/Picheo) */
+        .subnav-secundario {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0 1.5rem 0;
+            background: #f8fafc;
+            padding: 0.4rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .subnav-secundario-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            background: transparent;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.2s;
+            flex: 1;
+        }
+
+        .subnav-secundario-btn:hover {
+            background: var(--secondary-blue);
+            color: var(--primary-blue);
+        }
+
+        .subnav-secundario-btn.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* Posición de equipos */
+        .posicion-equipos {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .posicion-equipos h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .posiciones-tabla {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .posiciones-tabla th {
+            text-align: left;
+            padding: 0.8rem 0.5rem;
+            color: #64748b;
+            font-weight: 600;
+            border-bottom: 2px solid var(--secondary-blue);
+        }
+
+        .posiciones-tabla td {
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .posiciones-tabla tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Contenedores de secciones */
+        .seccion-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .seccion-container h2 {
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-blue);
+        }
+
+        /* Tablas ordenables */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .data-table th:hover {
+            background: #0066cc;
+        }
+
+        .data-table th::after {
+            content: ' ↕️';
+            opacity: 0.7;
+            font-size: 0.8rem;
+        }
+
+        .data-table th.asc::after {
+            content: ' ↑';
+        }
+
+        .data-table th.desc::after {
+            content: ' ↓';
+        }
+
+        .data-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .data-table tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Filtros */
+        .filtros {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filtro-select {
+            padding: 0.6rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: white;
+            min-width: 200px;
+        }
+
+        .filtro-select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        /* Calendario */
+        .partidos-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .partido-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            transition: 0.2s;
+        }
+
+        .partido-item:hover {
+            border-color: var(--primary-blue);
+            background: white;
+        }
+
+        .partido-equipos {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .partido-equipo {
+            font-weight: 600;
+        }
+
+        .partido-vs {
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .partido-resultado {
+            flex: 1;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .partido-fecha {
+            flex: 1;
+            text-align: right;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .liga-container {
+                flex-direction: column;
+            }
+            
+            .partido-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .partido-equipos {
+                width: 100%;
+            }
+            
+            .partido-resultado, .partido-fecha {
+                width: 100%;
+                text-align: left;
+            }
+            
+            .subnav, .subnav-secundario, .selector-temporadas {
+                flex-direction: column;
+            }
+        }
+
+        /* Estilos para badge de posición en jugadores */
+        .badge-posicion {
+            display: inline-block;
+            background: var(--secondary-blue);
+            color: var(--primary-blue);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Contador de jugadores */
+        .jugadores-count {
+            background: var(--secondary-blue);
+            color: var(--primary-blue);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="img/logo.png" alt="Liga de Anotadores" class="logo-img">
+            <div class="logo-text">
+                Liga de Anotadores<span></span>
+            </div>
+        </div>
+        <div class="buscador">
+            <input type="text" placeholder="Buscar...">
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="quienes-somos.html">Quienes somos</a>
+        <a href="liga.html" class="active">Liga</a>
+        <a href="#">Resultados</a>
+        <a href="#">Estadísticas</a>
+    </nav>
+
+    <div class="hero">
+        <h1>Liga</h1>
+        <p>Torneos de ligas menores de béisbol venezolano</p>
+    </div>
+
+    <div class="liga-container">
+        <!-- Sidebar de Ligas con Acordeón -->
+        <aside class="categorias-sidebar">
+            <h3><span>⚾</span> Ligas</h3>
+            <div id="acordeon-ligas">
+                <!-- Se llena con JavaScript dinámicamente desde el objeto ligasData -->
+            </div>
+        </aside>
+
+        <!-- Área de contenido principal -->
+        <main class="liga-content">
+            <!-- Selector de Temporadas -->
+            <div class="selector-temporadas">
+                <button class="temporada-btn" onclick="seleccionarTemporada('2022-2023')">2022-2023</button>
+                <button class="temporada-btn" onclick="seleccionarTemporada('2023-2024')">2023-2024</button>
+                <button class="temporada-btn active" onclick="seleccionarTemporada('2024-2025')">2024-2025</button>
+            </div>
+
+            <!-- Subnavegación principal -->
+            <div class="subnav">
+                <button class="subnav-btn" onclick="mostrarSeccion('calendario')">📅 Calendario</button>
+                <button class="subnav-btn active" onclick="mostrarSeccion('lideres')">📊 Líderes</button>
+                <button class="subnav-btn" onclick="mostrarSeccion('jugadores')">👥 Jugadores</button>
+            </div>
+
+            <!-- Posición de equipos (visible en todas las secciones) -->
+            <div class="posicion-equipos">
+                <h3><span>📊</span> Posición de equipos - <span id="liga-actual">Limenor</span> - <span id="categoria-actual">Juvenil</span></h3>
+                <table class="posiciones-tabla" id="tabla-posiciones">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Equipo</th>
+                            <th>JJ</th>
+                            <th>G</th>
+                            <th>P</th>
+                            <th>PCT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="posiciones-body">
+                        <!-- Se llena con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SECCIÓN CALENDARIO -->
+            <div id="seccion-calendario" class="seccion-container" style="display: none;">
+                <h2><span>📅</span> Calendario de juegos</h2>
+                
+                <div class="filtros">
+                    <select class="filtro-select" id="filtro-semana">
+                        <option value="1">Semana 1</option>
+                        <option value="2">Semana 2</option>
+                        <option value="3">Semana 3</option>
+                        <option value="4">Semana 4</option>
+                        <option value="5">Semana 5</option>
+                    </select>
+                    <select class="filtro-select" id="filtro-equipo">
+                        <option value="todos">Todos los equipos</option>
+                    </select>
+                </div>
+
+                <div class="partidos-lista" id="partidos-lista">
+                    <!-- Se llena con JavaScript -->
+                </div>
+            </div>
+
+            <!-- SECCIÓN LÍDERES -->
+            <div id="seccion-lideres" class="seccion-container">
+                <h2><span>📊</span> Líderes</h2>
+                
+                <!-- Subnavegación para Bateo/Picheo -->
+                <div class="subnav-secundario">
+                    <button class="subnav-secundario-btn active" onclick="mostrarSubLideres('bateo')">🦇 Bateo</button>
+                    <button class="subnav-secundario-btn" onclick="mostrarSubLideres('picheo')">⚡ Picheo</button>
+                </div>
+
+                <!-- Sección Bateo -->
+                <div id="subseccion-bateo">
+                    <div class="table-container">
+                        <table class="data-table" id="tabla-bateo">
+                            <thead>
+                                <tr>
+                                    <th onclick="ordenarTabla('bateo', 'jugador')">Jugador</th>
+                                    <th onclick="ordenarTabla('bateo', 'equipo')">Equipo</th>
+                                    <th onclick="ordenarTabla('bateo', 'avg')">AVG</th>
+                                    <th onclick="ordenarTabla('bateo', 'hr')">HR</th>
+                                    <th onclick="ordenarTabla('bateo', 'rbi')">RBI</th>
+                                    <th onclick="ordenarTabla('bateo', 'h')">H</th>
+                                    <th onclick="ordenarTabla('bateo', 'ab')">AB</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-bateo-body">
+                                <!-- Se llena con JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="margin-top: 1rem; color: #64748b; font-size: 0.9rem;">⬆️ Haz clic en las columnas para ordenar</p>
+                </div>
+
+                <!-- Sección Picheo -->
+                <div id="subseccion-picheo" style="display: none;">
+                    <div class="table-container">
+                        <table class="data-table" id="tabla-picheo">
+                            <thead>
+                                <tr>
+                                    <th onclick="ordenarTabla('picheo', 'jugador')">Jugador</th>
+                                    <th onclick="ordenarTabla('picheo', 'equipo')">Equipo</th>
+                                    <th onclick="ordenarTabla('picheo', 'era')">ERA</th>
+                                    <th onclick="ordenarTabla('picheo', 'w')">W</th>
+                                    <th onclick="ordenarTabla('picheo', 'l')">L</th>
+                                    <th onclick="ordenarTabla('picheo', 'so')">SO</th>
+                                    <th onclick="ordenarTabla('picheo', 'ip')">IP</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-picheo-body">
+                                <!-- Se llena con JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="margin-top: 1rem; color: #64748b; font-size: 0.9rem;">⬆️ Haz clic en las columnas para ordenar</p>
+                </div>
+            </div>
+
+            <!-- SECCIÓN JUGADORES (placeholder) -->
+            <!-- SECCIÓN JUGADORES - Reemplazar el placeholder actual -->
+<div id="seccion-jugadores" class="seccion-container" style="display: none;">
+    <h2><span>👥</span> Jugadores</h2>
+    <p style="margin-bottom: 1.5rem;">Lista completa de jugadores de <strong id="liga-jugadores">Limenor</strong> - <strong id="categoria-jugadores">Juvenil</strong> - Temporada <span id="temporada-jugadores">2024-2025</span></p>
+    
+    <div class="filtros">
+        <select class="filtro-select" id="filtro-equipo-jugadores">
+            <option value="todos">Todos los equipos</option>
+        </select>
+        <select class="filtro-select" id="filtro-posicion-jugadores">
+            <option value="todos">Todas las posiciones</option>
+            <option value="C">Cácher (C)</option>
+            <option value="1B">Primera base (1B)</option>
+            <option value="2B">Segunda base (2B)</option>
+            <option value="3B">Tercera base (3B)</option>
+            <option value="SS">Shortstop (SS)</option>
+            <option value="LF">Jardinero izquierdo (LF)</option>
+            <option value="CF">Jardinero central (CF)</option>
+            <option value="RF">Jardinero derecho (RF)</option>
+            <option value="P">Lanzador (P)</option>
+            <option value="BD">Bateador designado (BD)</option>
+        </select>
+    </div>
+
+        <div class="table-container">
+            <table class="data-table" id="tabla-jugadores">
+                <thead>
+                    <tr>
+                        <th onclick="ordenarTablaJugadores('nombre')">Jugador</th>
+                        <th onclick="ordenarTablaJugadores('equipo')">Equipo</th>
+                        <th onclick="ordenarTablaJugadores('edad')">Edad</th>
+                        <th onclick="ordenarTablaJugadores('posicion')">Posición</th>
+                        <th onclick="ordenarTablaJugadores('batea')">Batea</th>
+                        <th onclick="ordenarTablaJugadores('lanza')">Lanza</th>
+                        <th onclick="ordenarTablaJugadores('numero')">#</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-jugadores-body">
+                    <!-- Se llena con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <p style="margin-top: 1rem; color: #64748b; font-size: 0.9rem;">⬆️ Haz clic en las columnas para ordenar</p>
+    </div>
+        </main>
+    </div>
+
+    <footer>
+        <h3>📞 Contactos</h3>
+        <p>📧 contacto@ligadeanotadores.com</p>
+        <p>📱 @ligadeanotadores (IG / X)</p>
+        <p>📞 +58 412-1234567</p>
+        <div class="redes">
+            <span>⚾ X</span>
+            <span>📷 Instagram</span>
+            <span>💬 Telegram</span>
+        </div>
+        <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.7;">© 2025 Liga de Anotadores - Béisbol menor de Venezuela</p>
+    </footer>
+
+    <script>
+        // ========== OBJETO DE DATOS DE LIGAS Y CATEGORÍAS ==========
+        // Aquí es donde debes completar los datos de cada liga y sus categorías
+        // Formato: cada liga tiene un array de categorías
+        
+        const ligasData = {
+            "Juvenil UCV": {
+                categorias: [
+                    "Juvenil"
+                ],
+                equiposPorCategoria: {}
+            },
+            "Limenor": {
+                categorias: [
+                    "Semillita",
+                    "Preparatorio",
+                    "Preinfantil",
+                    "Infantil",
+                    "Prejunior",
+                    "Junior",
+                    "Superior",
+                    "Juvenil"
+                ],
+                equiposPorCategoria: {
+                    // Puedes agregar equipos específicos por categoría aquí si lo deseas
+                }
+            },
+            "Intervecinal": {
+                categorias: [
+                    "Lanzamiento modificado",
+                    "Lanzamiento lento"
+                ],
+                equiposPorCategoria: {}
+            },
+            "Libenam": {
+                categorias: [
+                    "Juvenil",
+                    "Preparatorio",
+                    "Preinfantil",
+                    "Infantil",
+                    "Prejunior",
+                    "Junior",
+                    "Semillita"
+                ],
+                equiposPorCategoria: {}
+            },
+            "Popular": {
+                categorias: [
+                    "Superior",
+                    "Master"
+                ],
+                equiposPorCategoria: {}
+            },
+            "Unimet": {
+                categorias: [
+                    "Senior"
+                ],
+                equiposPorCategoria: {}
+            },
+            "Torneo CRUC": {
+                categorias: [
+                    "Preinfantil",
+                    "Prejunior",
+                    "Junior"
+                ],
+                equiposPorCategoria: {}
+            },
+            "Linabio": {
+                categorias: [
+                    "Ascenso",
+                ],
+                equiposPorCategoria: {}
+            },
+            "Abedica": {
+                categorias: [
+                    "Infantil femenino",
+                    "Adulta"
+                ],
+                equiposPorCategoria: {}
+            },
+            "Softball Chato Candela": {
+                categorias: [
+                    "Lanzamiento lento"
+                ],
+                equiposPorCategoria: {}
+            },
+            "Ávila Miranda": {
+                categorias: [
+                    "Preparatorio",
+                    "Preinfantil",
+                    "Infantil",
+                    "Prejunior",
+                    "Junior"
+                ],
+                equiposPorCategoria: {}
+            },
+            "Juvenil Miranda": {
+                categorias: [
+                    "Juvenil"
+                ],
+                equiposPorCategoria: {}
+            },
+            "Monumental": {
+                categorias: [
+                    "Preparatorio",
+                    "Preinfantil",
+                    "Infantil",
+                    "Prejunior",
+                    "Junior",
+                    "Ascenso"
+                ],
+                equiposPorCategoria: {}
+            },
+        };
+
+        // Equipos por liga (datos de ejemplo)
+        const equiposPorLiga = {
+            "Limenor": {
+                "Semillita": ["Limenor A", "Limenor B", "Limenor C", "Limenor D"],
+                "Preparatorio": ["Preparatorio A", "Preparatorio B", "Preparatorio C"],
+                "Preinfantil": ["Preinfantil A", "Preinfantil B", "Preinfantil C", "Preinfantil D"],
+                "Infantil": ["Infantil A", "Infantil B", "Infantil C"],
+                "Prejunior": ["Prejunior A", "Prejunior B", "Prejunior C"],
+                "Junior": ["Junior A", "Junior B", "Junior C", "Junior D"],
+                "Superior": ["Superior A", "Superior B", "Superior C"],
+                "Juvenil": ["Juvenil A", "Juvenil B", "Juvenil C", "Juvenil D"]
+            },
+            "Monumental": {
+                "Juvenil": ["Lideres de Caracas", "Bravos de Miranda", "Caciques de Vargas", "Guerreros de Aragua", "Titanes de La Guaira", "Potros de Bolívar"]
+            },
+            "Juvenil UCV": {
+                "Juvenil": ["Universidad Central", "USB", "UCAB", "UNIMET", "UPEL", "Andrés Bello"]
+            },
+            "Intervecinal": {
+                "Juvenil": ["Vecinos Unidos", "San Bernardino", "La Candelaria", "El Paraíso", "Chacao", "Altamira"]
+            },
+            "Libenam": {
+                "Juvenil": ["Libertador A", "Libertador B", "Libertador C", "Libertador D", "Libertador E"]
+            },
+            "Popular": {
+                "Juvenil": ["23 de Enero", "Antímano", "Caricuao", "Catia", "El Valle", "San Agustín"]
+            },
+            "Unimet": {
+                "Juvenil": ["Unimet A", "Unimet B", "Unimet C", "Unimet D"]
+            },
+            "Torneo CRUC": {
+                "Juvenil": ["CRUC 1", "CRUC 2", "CRUC 3", "CRUC 4", "CRUC 5"]
+            },
+            "Linabio": {
+                "Juvenil": ["Linabio A", "Linabio B", "Linabio C"]
+            },
+            "Abedica": {
+                "Juvenil": ["Abedica 1", "Abedica 2", "Abedica 3", "Abedica 4"]
+            },
+            "Softball Chato Candela": {
+                "Juvenil": ["Chato Candela A", "Chato Candela B", "Chato Candela C"]
+            },
+            "Ávila Miranda": {
+                "Juvenil": ["Ávila A", "Ávila B", "Ávila C", "Ávila D"]
+            },
+            "Juvenil Miranda": {
+                "Juvenil": ["Miranda A", "Miranda B", "Miranda C", "Miranda D", "Miranda E"]
+            }
+        };
+
+        // Datos de bateo por liga y categoría
+        const datosBateo = {
+            "Limenor_Juvenil": [
+                { jugador: "Carlos Pérez", equipo: "Juvenil A", avg: 0.425, hr: 8, rbi: 27, h: 34, ab: 80 },
+                { jugador: "Luis González", equipo: "Juvenil B", avg: 0.398, hr: 6, rbi: 22, h: 31, ab: 78 },
+                { jugador: "José Rodríguez", equipo: "Juvenil C", avg: 0.385, hr: 7, rbi: 24, h: 30, ab: 78 }
+            ],
+            "Monumental_Juvenil": [
+                { jugador: "Carlos Pérez", equipo: "Lideres de Caracas", avg: 0.425, hr: 8, rbi: 27, h: 34, ab: 80 },
+                { jugador: "Luis González", equipo: "Bravos de Miranda", avg: 0.398, hr: 6, rbi: 22, h: 31, ab: 78 },
+                { jugador: "José Rodríguez", equipo: "Caciques de Vargas", avg: 0.385, hr: 7, rbi: 24, h: 30, ab: 78 }
+            ]
+        };
+
+        const datosPicheo = {
+            "Limenor_Juvenil": [
+                { jugador: "Ramón García", equipo: "Juvenil A", era: 1.85, w: 7, l: 1, so: 52, ip: 58.2 },
+                { jugador: "Félix Hernández", equipo: "Juvenil B", era: 2.12, w: 6, l: 2, so: 48, ip: 55.1 },
+                { jugador: "Pablo Sandoval", equipo: "Juvenil C", era: 2.45, w: 5, l: 2, so: 44, ip: 51.0 }
+            ],
+            "Monumental_Juvenil": [
+                { jugador: "Ramón García", equipo: "Lideres de Caracas", era: 1.85, w: 7, l: 1, so: 52, ip: 58.2 },
+                { jugador: "Félix Hernández", equipo: "Bravos de Miranda", era: 2.12, w: 6, l: 2, so: 48, ip: 55.1 },
+                { jugador: "Pablo Sandoval", equipo: "Caciques de Vargas", era: 2.45, w: 5, l: 2, so: 44, ip: 51.0 }
+            ]
+        };
+
+        // Datos de jugadores por liga y categoría
+const datosJugadores = {
+    "Limenor_Juvenil": [
+        { nombre: "Carlos Pérez", equipo: "Juvenil A", edad: 17, posicion: "LF", batea: "Izquierda", lanza: "Derecha", numero: 24 },
+        { nombre: "Luis González", equipo: "Juvenil B", edad: 18, posicion: "SS", batea: "Derecha", lanza: "Derecha", numero: 7 },
+        { nombre: "José Rodríguez", equipo: "Juvenil C", edad: 17, posicion: "P", batea: "Derecha", lanza: "Derecha", numero: 45 },
+        { nombre: "Miguel Sánchez", equipo: "Juvenil A", edad: 18, posicion: "1B", batea: "Derecha", lanza: "Derecha", numero: 12 },
+        { nombre: "Andrés Hernández", equipo: "Juvenil D", edad: 17, posicion: "CF", batea: "Ambidiestro", lanza: "Derecha", numero: 9 },
+        { nombre: "Jesús Castillo", equipo: "Juvenil B", edad: 19, posicion: "C", batea: "Derecha", lanza: "Derecha", numero: 33 },
+        { nombre: "Ramón García", equipo: "Juvenil C", edad: 18, posicion: "P", batea: "Izquierda", lanza: "Izquierda", numero: 28 },
+        { nombre: "Félix Hernández", equipo: "Juvenil A", edad: 17, posicion: "3B", batea: "Derecha", lanza: "Derecha", numero: 5 },
+        { nombre: "Pablo Sandoval", equipo: "Juvenil B", edad: 18, posicion: "RF", batea: "Izquierda", lanza: "Izquierda", numero: 48 },
+        { nombre: "Oswaldo Pérez", equipo: "Juvenil D", edad: 17, posicion: "2B", batea: "Derecha", lanza: "Derecha", numero: 2 },
+        { nombre: "Johan Santana", equipo: "Juvenil C", edad: 18, posicion: "P", batea: "Izquierda", lanza: "Izquierda", numero: 57 },
+        { nombre: "Aníbal Sánchez", equipo: "Juvenil A", edad: 17, posicion: "SS", batea: "Derecha", lanza: "Derecha", numero: 11 }
+    ],
+    "Monumental_Juvenil": [
+        { nombre: "Carlos Pérez", equipo: "Lideres de Caracas", edad: 18, posicion: "LF", batea: "Izquierda", lanza: "Derecha", numero: 24 },
+        { nombre: "Luis González", equipo: "Bravos de Miranda", edad: 19, posicion: "SS", batea: "Derecha", lanza: "Derecha", numero: 7 },
+        { nombre: "José Rodríguez", equipo: "Caciques de Vargas", edad: 18, posicion: "P", batea: "Derecha", lanza: "Derecha", numero: 45 },
+        { nombre: "Miguel Sánchez", equipo: "Guerreros de Aragua", edad: 19, posicion: "1B", batea: "Derecha", lanza: "Derecha", numero: 12 },
+        { nombre: "Andrés Hernández", equipo: "Titanes de La Guaira", edad: 18, posicion: "CF", batea: "Ambidiestro", lanza: "Derecha", numero: 9 },
+        { nombre: "Jesús Castillo", equipo: "Potros de Bolívar", edad: 20, posicion: "C", batea: "Derecha", lanza: "Derecha", numero: 33 }
+    ]
+};
+
+// Generar datos de jugadores para otras categorías de Limenor
+const generarDatosJugadoresPorCategoria = () => {
+    const categoriasLimenor = ["Semillita", "Preparatorio", "Preinfantil", "Infantil", "Prejunior", "Junior", "Superior"];
+    const posicionesPorEdad = {
+        "Semillita": ["C", "1B", "2B", "SS", "3B", "LF", "CF", "RF"],
+        "Preparatorio": ["C", "1B", "2B", "SS", "3B", "LF", "CF", "RF", "P"],
+        "Preinfantil": ["C", "1B", "2B", "SS", "3B", "LF", "CF", "RF", "P"],
+        "Infantil": ["C", "1B", "2B", "SS", "3B", "LF", "CF", "RF", "P"],
+        "Prejunior": ["C", "1B", "2B", "SS", "3B", "LF", "CF", "RF", "P", "BD"],
+        "Junior": ["C", "1B", "2B", "SS", "3B", "LF", "CF", "RF", "P", "BD"],
+        "Superior": ["C", "1B", "2B", "SS", "3B", "LF", "CF", "RF", "P", "BD"]
+    };
+    
+    const edadesPorCategoria = {
+        "Semillita": [7, 8, 9],
+        "Preparatorio": [10, 11],
+        "Preinfantil": [12, 13],
+        "Infantil": [14, 15],
+        "Prejunior": [16, 17],
+        "Junior": [18, 19],
+        "Superior": [20, 21, 22]
+    };
+    
+    const nombres = ["Alejandro", "Diego", "Mateo", "Santiago", "Lucas", "Daniel", "Gabriel", "Emiliano", "Adrián", "David", "Samuel", "Joaquín", "Tomás", "Bruno", "Felipe", "Nicolás", "Sebastián", "Martín", "Julián", "Andrés"];
+    const apellidos = ["Pérez", "González", "Rodríguez", "Sánchez", "Martínez", "García", "López", "Hernández", "Díaz", "Torres", "Mendoza", "Castillo", "Rojas", "Silva", "Ortega", "Navarro", "Morales", "Jiménez", "Ruiz", "Vargas"];
+    const manos = ["Derecha", "Izquierda", "Ambidiestro"];
+    
+    categoriasLimenor.forEach(cat => {
+        const key = `Limenor_${cat}`;
+        if (!datosJugadores[key]) {
+            datosJugadores[key] = [];
+            const equipos = equiposPorLiga["Limenor"][cat] || [`${cat} A`, `${cat} B`, `${cat} C`];
+            const posDisponibles = posicionesPorEdad[cat] || ["C", "1B", "2B", "SS", "3B", "LF", "CF", "RF"];
+            const edadesPosibles = edadesPorCategoria[cat] || [15, 16, 17];
+            
+            equipos.forEach(equipo => {
+                const numJugadores = cat === "Semillita" ? 12 : cat === "Preparatorio" ? 14 : 16;
+                for (let i = 0; i < numJugadores; i++) {
+                    const nombreCompleto = `${nombres[Math.floor(Math.random() * nombres.length)]} ${apellidos[Math.floor(Math.random() * apellidos.length)]}`;
+                    const edad = edadesPosibles[Math.floor(Math.random() * edadesPosibles.length)];
+                    const posicion = posDisponibles[Math.floor(Math.random() * posDisponibles.length)];
+                    const batea = manos[Math.floor(Math.random() * manos.length)];
+                    const lanza = manos[Math.floor(Math.random() * manos.length)];
+                    const numero = Math.floor(Math.random() * 99) + 1;
+                    
+                    datosJugadores[key].push({
+                        nombre: nombreCompleto,
+                        equipo: equipo,
+                        edad: edad,
+                        posicion: posicion,
+                        batea: batea,
+                        lanza: lanza,
+                        numero: numero
+                    });
+                }
+            });
+        }
+    });
+};
+
+// Llamar a la función para generar datos de todas las categorías
+generarDatosJugadoresPorCategoria();
+
+        // Estado actual
+        let ligaSeleccionada = "Limenor";
+        let categoriaSeleccionada = "Juvenil";
+        let temporadaSeleccionada = "2024-2025";
+        let ordenBateo = { columna: 'avg', direccion: 'desc' };
+        let ordenPicheo = { columna: 'era', direccion: 'asc' };
+        let ordenJugadores = { columna: 'nombre', direccion: 'asc' };
+        let filtroEquipoJugadores = 'todos';
+        let filtroPosicionJugadores = 'todos';
+
+        // ========== FUNCIONES DEL ACORDEÓN ==========
+        
+        function inicializarAcordeon() {
+            const container = document.getElementById('acordeon-ligas');
+            container.innerHTML = '';
+            
+            Object.keys(ligasData).forEach(liga => {
+                const categorias = ligasData[liga].categorias;
+                
+                const acordeonItem = document.createElement('div');
+                acordeonItem.className = 'acordeon-item';
+                
+                const header = document.createElement('div');
+                header.className = 'acordeon-header';
+                if (liga === ligaSeleccionada) {
+                    header.classList.add('active');
+                }
+                header.innerHTML = `
+                    <span>⚾ ${liga}</span>
+                    <span class="flecha">▼</span>
+                `;
+                
+                const contenido = document.createElement('div');
+                contenido.className = 'acordeon-contenido';
+                if (liga === ligaSeleccionada) {
+                    contenido.classList.add('show');
+                }
+                
+                const lista = document.createElement('ul');
+                lista.className = 'categorias-lista';
+                
+                categorias.forEach(categoria => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = '#';
+                    a.textContent = categoria;
+                    if (liga === ligaSeleccionada && categoria === categoriaSeleccionada) {
+                        a.classList.add('active');
+                    }
+                    a.onclick = (function(l, c) {
+                        return function(e) {
+                            e.preventDefault();
+                            seleccionarCategoria(l, c);
+                        };
+                    })(liga, categoria);
+                    li.appendChild(a);
+                    lista.appendChild(li);
+                });
+                
+                contenido.appendChild(lista);
+                acordeonItem.appendChild(header);
+                acordeonItem.appendChild(contenido);
+                
+                header.onclick = function() {
+                    this.classList.toggle('active');
+                    const contenidoAcordeon = this.nextElementSibling;
+                    contenidoAcordeon.classList.toggle('show');
+                };
+                
+                container.appendChild(acordeonItem);
+            });
+        }
+
+        function seleccionarCategoria(liga, categoria) {
+            ligaSeleccionada = liga;
+            categoriaSeleccionada = categoria;
+            
+            // Actualizar clase active en el acordeón
+            document.querySelectorAll('.categorias-lista a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Actualizar títulos
+            document.getElementById('liga-actual').textContent = liga;
+            document.getElementById('categoria-actual').textContent = categoria;
+            
+            // Actualizar datos
+            actualizarPosiciones();
+            actualizarFiltroEquipos();
+            actualizarPartidos();
+            actualizarTablasLideres();
+        }
+
+        // ========== FUNCIONES DE TEMPORADA ==========
+        
+        function seleccionarTemporada(temporada) {
+            temporadaSeleccionada = temporada;
+            
+            document.querySelectorAll('.temporada-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Actualizar datos según la temporada seleccionada
+            actualizarPosiciones();
+            actualizarPartidos();
+            actualizarTablasLideres();
+        }
+
+        // ========== FUNCIONES DE NAVEGACIÓN ==========
+        
+        function mostrarSeccion(seccion) {
+            document.querySelectorAll('.subnav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            document.getElementById('seccion-calendario').style.display = 'none';
+            document.getElementById('seccion-lideres').style.display = 'none';
+            document.getElementById('seccion-jugadores').style.display = 'none';
+            
+            document.getElementById(`seccion-${seccion}`).style.display = 'block';
+            
+            if (seccion === 'lideres') {
+                actualizarTablasLideres();
+            }
+        }
+
+        function mostrarSubLideres(tipo) {
+            document.querySelectorAll('.subnav-secundario-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            document.getElementById('subseccion-bateo').style.display = 'none';
+            document.getElementById('subseccion-picheo').style.display = 'none';
+            
+            document.getElementById(`subseccion-${tipo}`).style.display = 'block';
+        }
+
+        // ========== FUNCIONES DE DATOS ==========
+        
+        function getEquiposActuales() {
+            const equiposPorCat = equiposPorLiga[ligaSeleccionada];
+            if (equiposPorCat && equiposPorCat[categoriaSeleccionada]) {
+                return equiposPorCat[categoriaSeleccionada];
+            }
+            return equiposPorLiga["Limenor"]["Juvenil"] || ["Equipo A", "Equipo B", "Equipo C"];
+        }
+
+        function actualizarPosiciones() {
+            const equipos = getEquiposActuales();
+            const tbody = document.getElementById('posiciones-body');
+            tbody.innerHTML = '';
+            
+            equipos.forEach((equipo, index) => {
+                const g = Math.floor(Math.random() * 10) + 8;
+                const p = Math.floor(Math.random() * 6) + 2;
+                const jj = g + p;
+                const pct = (g / jj).toFixed(3);
+                
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${equipo}</strong></td>
+                        <td>${jj}</td>
+                        <td>${g}</td>
+                        <td>${p}</td>
+                        <td>${pct}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function actualizarFiltroEquipos() {
+            const equipos = getEquiposActuales();
+            const select = document.getElementById('filtro-equipo');
+            select.innerHTML = '<option value="todos">Todos los equipos</option>';
+            
+            equipos.forEach(equipo => {
+                select.innerHTML += `<option value="${equipo}">${equipo}</option>`;
+            });
+        }
+
+        function actualizarPartidos() {
+            const equipos = getEquiposActuales();
+            const partidosLista = document.getElementById('partidos-lista');
+            partidosLista.innerHTML = '';
+            
+            for (let i = 0; i < 6; i++) {
+                const idx1 = Math.floor(Math.random() * equipos.length);
+                let idx2 = Math.floor(Math.random() * equipos.length);
+                while (idx2 === idx1) {
+                    idx2 = Math.floor(Math.random() * equipos.length);
+                }
+                
+                const equipo1 = equipos[idx1];
+                const equipo2 = equipos[idx2];
+                const runs1 = Math.floor(Math.random() * 10);
+                const runs2 = Math.floor(Math.random() * 10);
+                const fecha = `${Math.floor(Math.random() * 28) + 1} Mar`;
+                
+                partidosLista.innerHTML += `
+                    <div class="partido-item">
+                        <div class="partido-equipos">
+                            <span class="partido-equipo">${equipo1}</span>
+                            <span class="partido-vs">vs</span>
+                            <span class="partido-equipo">${equipo2}</span>
+                        </div>
+                        <div class="partido-resultado">${runs1} - ${runs2}</div>
+                        <div class="partido-fecha">${fecha}</div>
+                    </div>
+                `;
+            }
+        }
+
+        function actualizarTablasLideres() {
+            const key = `${ligaSeleccionada}_${categoriaSeleccionada}`;
+            const datosBateoActual = datosBateo[key] || datosBateo["Limenor_Juvenil"];
+            const datosPicheoActual = datosPicheo[key] || datosPicheo["Limenor_Juvenil"];
+            
+            renderizarTablaBateo(datosBateoActual);
+            renderizarTablaPicheo(datosPicheoActual);
+        }
+
+        function renderizarTablaBateo(datos) {
+            const tbody = document.getElementById('tabla-bateo-body');
+            tbody.innerHTML = '';
+            
+            datos.forEach(d => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${d.jugador}</strong></td>
+                        <td>${d.equipo}${ligaSeleccionada === "Limenor" ? ` (${categoriaSeleccionada})` : ''}${ligaSeleccionada !== "Limenor" ? '' : ''}${d.equipo.includes(' ') ? '' : ''} \n                             <span class="badge-lider">${categoriaSeleccionada}</span>\n                         </td>
+                         <td>${d.avg.toFixed(3)}</td>
+                         <td>${d.hr}</td>
+                         <td>${d.rbi}</td>
+                         <td>${d.h}</td>
+                         <td>${d.ab}</td>
+                     </tr>
+                 `;
+             });
+         }
+ 
+         function renderizarTablaPicheo(datos) {
+             const tbody = document.getElementById('tabla-picheo-body');
+             tbody.innerHTML = '';
+             
+             datos.forEach(d => {
+                 tbody.innerHTML += `
+                     <tr>
+                         <td><strong>${d.jugador}</strong></td>
+                         <td>${d.equipo}</td>
+                         <td>${d.era.toFixed(2)}</td>
+                         <td>${d.w}</td>
+                         <td>${d.l}</td>
+                         <td>${d.so}</td>
+                         <td>${d.ip}</td>
+                     </tr>
+                 `;
+             });
+         }
+ 
+         function ordenarTabla(tipo, columna) {
+             let datos;
+             const key = `${ligaSeleccionada}_${categoriaSeleccionada}`;
+             
+             if (tipo === 'bateo') {
+                 datos = datosBateo[key] || datosBateo["Limenor_Juvenil"];
+                 
+                 if (ordenBateo.columna === columna) {
+                     ordenBateo.direccion = ordenBateo.direccion === 'asc' ? 'desc' : 'asc';
+                 } else {
+                     ordenBateo.columna = columna;
+                     ordenBateo.direccion = 'asc';
+                 }
+                 
+                 datos.sort((a, b) => {
+                     let valA = a[columna];
+                     let valB = b[columna];
+                     
+                     if (typeof valA === 'string') {
+                         return ordenBateo.direccion === 'asc' 
+                             ? valA.localeCompare(valB) 
+                             : valB.localeCompare(valA);
+                     } else {
+                         return ordenBateo.direccion === 'asc' 
+                             ? valA - valB 
+                             : valB - valA;
+                     }
+                 });
+                 
+                 renderizarTablaBateo(datos);
+                 
+                 document.querySelectorAll('#tabla-bateo th').forEach(th => {
+                     th.classList.remove('asc', 'desc');
+                 });
+                 event.target.classList.add(ordenBateo.direccion);
+             }
+             
+             else if (tipo === 'picheo') {
+                 datos = datosPicheo[key] || datosPicheo["Limenor_Juvenil"];
+                 
+                 if (ordenPicheo.columna === columna) {
+                     ordenPicheo.direccion = ordenPicheo.direccion === 'asc' ? 'desc' : 'asc';
+                 } else {
+                     ordenPicheo.columna = columna;
+                     ordenPicheo.direccion = 'asc';
+                 }
+                 
+                 datos.sort((a, b) => {
+                     let valA = a[columna];
+                     let valB = b[columna];
+                     
+                     if (typeof valA === 'string') {
+                         return ordenPicheo.direccion === 'asc' 
+                             ? valA.localeCompare(valB) 
+                             : valB.localeCompare(valA);
+                     } else {
+                         return ordenPicheo.direccion === 'asc' 
+                             ? valA - valB 
+                             : valB - valA;
+                     }
+                 });
+                 
+                 renderizarTablaPicheo(datos);
+                 
+                 document.querySelectorAll('#tabla-picheo th').forEach(th => {
+                     th.classList.remove('asc', 'desc');
+                 });
+                 event.target.classList.add(ordenPicheo.direccion);
+             }
+         }
+
+         // ========== FUNCIONES DE JUGADORES ==========
+
+        function actualizarTablaJugadores() {
+            const key = `${ligaSeleccionada}_${categoriaSeleccionada}`;
+            let datos = datosJugadores[key] || datosJugadores["Limenor_Juvenil"];
+            
+            // Actualizar títulos
+            document.getElementById('liga-jugadores').textContent = ligaSeleccionada;
+            document.getElementById('categoria-jugadores').textContent = categoriaSeleccionada;
+            document.getElementById('temporada-jugadores').textContent = temporadaSeleccionada;
+            
+            // Actualizar filtro de equipos
+            const equipos = getEquiposActuales();
+            const selectEquipo = document.getElementById('filtro-equipo-jugadores');
+            selectEquipo.innerHTML = '<option value="todos">Todos los equipos</option>';
+            equipos.forEach(equipo => {
+                selectEquipo.innerHTML += `<option value="${equipo}">${equipo}</option>`;
+            });
+            
+            // Aplicar filtros
+            if (filtroEquipoJugadores !== 'todos') {
+                datos = datos.filter(j => j.equipo === filtroEquipoJugadores);
+            }
+            if (filtroPosicionJugadores !== 'todos') {
+                datos = datos.filter(j => j.posicion === filtroPosicionJugadores);
+            }
+            
+            // Aplicar ordenamiento
+            datos.sort((a, b) => {
+                let valA = a[ordenJugadores.columna];
+                let valB = b[ordenJugadores.columna];
+                
+                if (typeof valA === 'string') {
+                    return ordenJugadores.direccion === 'asc' 
+                        ? valA.localeCompare(valB) 
+                        : valB.localeCompare(valA);
+                } else {
+                    return ordenJugadores.direccion === 'asc' 
+                        ? valA - valB 
+                        : valB - valA;
+                }
+            });
+            
+            renderizarTablaJugadores(datos);
+        }
+
+        function renderizarTablaJugadores(datos) {
+            const tbody = document.getElementById('tabla-jugadores-body');
+            tbody.innerHTML = '';
+            
+            datos.forEach(j => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${j.nombre}</strong></td>
+                        <td>${j.equipo}</td>
+                        <td>${j.edad}</td>
+                        <td><span class="badge-posicion">${j.posicion}</span></td>
+                        <td>${j.batea}</td>
+                        <td>${j.lanza}</td>
+                        <td>${j.numero}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function ordenarTablaJugadores(columna) {
+            if (ordenJugadores.columna === columna) {
+                ordenJugadores.direccion = ordenJugadores.direccion === 'asc' ? 'desc' : 'asc';
+            } else {
+                ordenJugadores.columna = columna;
+                ordenJugadores.direccion = 'asc';
+            }
+            
+            actualizarTablaJugadores();
+            
+            // Actualizar indicadores visuales
+            document.querySelectorAll('#tabla-jugadores th').forEach(th => {
+                th.classList.remove('asc', 'desc');
+            });
+            event.target.classList.add(ordenJugadores.direccion);
+        }
+ 
+         // ========== INICIALIZACIÓN ==========
+         
+         document.addEventListener('DOMContentLoaded', function() {
+             inicializarAcordeon();
+             actualizarPosiciones();
+             actualizarFiltroEquipos();
+             actualizarPartidos();
+             actualizarTablasLideres();
+             
+             // Event listeners para filtros
+             document.getElementById('filtro-semana').addEventListener('change', function() {
+                 console.log('Semana seleccionada:', this.value);
+             });
+             
+             document.getElementById('filtro-equipo').addEventListener('change', function() {
+                 console.log('Equipo seleccionado:', this.value);
+             });
+         });
+     </script>
+ </body>
+ </html>

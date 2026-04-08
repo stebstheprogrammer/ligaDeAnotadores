@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga de Anotadores - Reglas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos específicos para la página de reglas */
+        .reglas-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .reglas-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .reglas-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .reglas-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,128,255,0.1);
+            border-color: var(--primary-blue);
+        }
+
+        .reglas-header {
+            background: linear-gradient(145deg, var(--primary-blue), #0066cc);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .reglas-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .reglas-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .reglas-contenido {
+            padding: 1.5rem;
+        }
+
+        .reglas-seccion {
+            margin-bottom: 1.5rem;
+        }
+
+        .reglas-seccion h3 {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid var(--secondary-blue);
+            display: inline-block;
+        }
+
+        .reglas-seccion ul, .reglas-seccion ol {
+            margin-left: 1.5rem;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .reglas-seccion li {
+            margin-bottom: 0.5rem;
+        }
+
+        .reglas-seccion p {
+            color: #334155;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+
+        .highlight-regla {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-blue);
+            margin: 1rem 0;
+        }
+
+        .highlight-regla p {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .reglas-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .reglas-container {
+                margin: 2rem auto;
+                padding: 0 1rem;
+            }
+        }
+
+        /* Fix para dropdown - evitar que se cierre */
+        .nav-item.dropdown:hover .dropdown-content {
+            display: block !important;
+        }
+
+        .dropdown-content {
+            margin-top: 0 !important;
+            top: 100%;
+        }
+
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="img/logo.png" alt="Liga de Anotadores" class="logo-img">
+            <div class="logo-text">
+                Liga de Anotadores<span></span>
+            </div>
+        </div>
+        <div class="buscador">
+            <input type="text" placeholder="Buscar...">
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-item"><a href="index.html" class="nav-link">Inicio</a></div>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle">Béisbol ▼</a>
+            <div class="dropdown-content">
+                <a href="beisbol.html?liga=Juvenil UCV">Juvenil UCV</a>
+                <a href="beisbol.html?liga=Limenor">Limenor</a>
+                <a href="beisbol.html?liga=Monumental">Monumental</a>
+                <a href="beisbol.html?liga=Popular">Popular</a>
+                <a href="beisbol.html?liga=Unimet">Unimet</a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle">Sóftbol ▼</a>
+            <div class="dropdown-content">
+                <a href="softbol.html?liga=Chato Candela">Chato Candela</a>
+                <a href="softbol.html?liga=Intervecinal">Intervecinal</a>
+            </div>
+        </div>
+        <div class="nav-item"><a href="reglas.html" class="nav-link active">Reglas</a></div>
+        <div class="nav-item"><a href="quienes-somos.html" class="nav-link">Quienes somos</a></div>
+    </nav>
+
+    <div class="liga-seleccionada-header">Reglas oficiales del béisbol y sóftbol</div>
+
+    <div class="reglas-container">
+        <div class="reglas-grid">
+            <!-- Béisbol -->
+            <div class="reglas-card">
+                <div class="reglas-header">
+                    <h2><span>⚾</span> Béisbol</h2>
+                    <p>Reglas básicas del deporte de las grandes ligas</p>
+                </div>
+                <div class="reglas-contenido">
+                    <div class="reglas-seccion">
+                        <h3>📋 Objetivo del juego</h3>
+                        <p>El objetivo del béisbol es anotar más carreras que el equipo contrario. Una carrera se anota cuando un jugador completa un recorrido por las cuatro bases sin ser eliminado.</p>
+                    </div>
+
+                    <div class="reglas-seccion">
+                        <h3>👥 Equipos y posiciones</h3>
+                        <ul>
+                            <li>Cada equipo tiene 9 jugadores en el campo.</li>
+                            <li>Posiciones: Lanzador (P), Cácher (C), 1ra base (1B), 2da base (2B), 3ra base (3B), Shortstop (SS), Jardinero izquierdo (LF), Jardinero central (CF), Jardinero derecho (RF).</li>
+                            <li>Se permite un bateador designado (BD) en lugar del lanzador en algunas ligas.</li>
+                        </ul>
+                    </div>
+
+                    <div class="reglas-seccion">
+                        <h3>⏱️ Duración del juego</h3>
+                        <ul>
+                            <li>Un juego estándar dura 9 entradas (innings).</li>
+                            <li>Cada entrada se divide en mitad superior (visitante batea) y mitad inferior (local batea).</li>
+                            <li>Cada equipo tiene 3 outs por entrada.</li>
+                            <li>En caso de empate, se juegan entradas extras hasta que haya un ganador.</li>
+                        </ul>
+                    </div>
+
+                    <div class="reglas-seccion">
+                        <h3>⚡ Formas de eliminar (Out)</h3>
+                        <ul>
+                            <li><strong>Strikeout:</strong> El bateador acumula 3 strikes.</li>
+                            <li><strong>Fly out:</strong> Un jardinero atrapa la pelota antes que toque el suelo.</li>
+                            <li><strong>Ground out:</strong> Un infielder recoge la pelota y la lanza a primera base antes que llegue el corredor.</li>
+                            <li><strong>Force out:</strong> Eliminación forzada en una base.</li>
+                            <li><strong>Tag out:</strong> Toque al corredor con la pelota fuera de la base.</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-regla">
+                        <p>💡 <strong>Dato importante:</strong> Un bateador recibe base por bolas (walk) después de 4 lanzamientos fuera de la zona de strike.</p>
+                    </div>
+
+                    <div class="reglas-seccion">
+                        <h3>🏃 Reglas de corredores</h3>
+                        <ul>
+                            <li>Los corredores deben pisar las bases en orden (1ra, 2da, 3ra, home).</li>
+                            <li>Pueden avanzar más de una base si la jugada lo permite.</li>
+                            <li>No pueden adelantar al corredor que va delante.</li>
+                            <li>El robo de base está permitido.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sóftbol -->
+            <div class="reglas-card">
+                <div class="reglas-header">
+                    <h2><span>🥎</span> Sóftbol</h2>
+                    <p>Reglas básicas del sóftbol (lanzamiento lento y modificado)</p>
+                </div>
+                <div class="reglas-contenido">
+                    <div class="reglas-seccion">
+                        <h3>📋 Objetivo del juego</h3>
+                        <p>Al igual que el béisbol, el objetivo es anotar más carreras que el equipo contrario completando el recorrido de las bases.</p>
+                    </div>
+
+                    <div class="reglas-seccion">
+                        <h3>👥 Equipos y posiciones</h3>
+                        <ul>
+                            <li>Cada equipo tiene 10 jugadores en el campo (incluye un jardinero extra).</li>
+                            <li>Posiciones: Lanzador, Cácher, 1ra base, 2da base, 3ra base, Shortstop, Jardinero izquierdo, Jardinero central, Jardinero derecho, Jardinero extra.</li>
+                            <li>En sóftbol femenino, se usan 9 jugadores.</li>
+                        </ul>
+                    </div>
+
+                    <div class="reglas-seccion">
+                        <h3>⏱️ Duración del juego</h3>
+                        <ul>
+                            <li>Un juego estándar dura 7 entradas (innings).</li>
+                            <li>Cada equipo tiene 3 outs por entrada.</li>
+                            <li>En caso de empate, se juegan entradas extras.</li>
+                        </ul>
+                    </div>
+
+                    <div class="reglas-seccion">
+                        <h3>⚡ Tipos de lanzamiento</h3>
+                        <ul>
+                            <li><strong>Lanzamiento lento:</strong> La pelota se lanza con un arco pronunciado, altura mínima de 1.80m y máxima de 3.60m. Es la modalidad más recreativa.</li>
+                            <li><strong>Lanzamiento modificado:</strong> Similar al rápido pero con restricciones en el movimiento del brazo. No se permite el lanzamiento tipo windmill completo.</li>
+                        </ul>
+                    </div>
+
+                    <div class="reglas-seccion">
+                        <h3>🏃 Diferencias clave con el béisbol</h3>
+                        <ul>
+                            <li>El campo es más pequeño (bases a 18.29m, distancia de lanzamiento variable).</li>
+                            <li>La pelota es más grande y menos dura.</li>
+                            <li>El bate es más liviano.</li>
+                            <li>No se permite salirse de la base antes de que el lanzador suelte la pelota.</li>
+                            <li>El robo de base no está permitido en lanzamiento lento.</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-regla">
+                        <p>💡 <strong>Dato importante:</strong> En lanzamiento lento, el lanzador debe mantener ambos pies en contacto con la goma de lanzamiento hasta soltar la pelota.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección adicional de reglas generales -->
+        <div class="reglas-card" style="margin-top: 2rem;">
+            <div class="reglas-header" style="background: linear-gradient(145deg, var(--secondary-blue), #b0f5ff); color: var(--black);">
+                <h2><span>📝</span> Reglas para Anotadores</h2>
+                <p>Normas específicas para el registro estadístico</p>
+            </div>
+            <div class="reglas-contenido">
+                <div class="reglas-seccion">
+                    <ul>
+                        <li><strong>Registro de jugadas:</strong> Cada jugada debe ser registrada utilizando la simbología oficial de anotación (1B, 2B, 3B, HR, K, BB, etc.).</li>
+                        <li><strong>Planillas:</strong> Las planillas de juego deben ser entregadas digitalmente dentro de las 24 horas posteriores al partido.</li>
+                        <li><strong>Certificación:</strong> Todo anotador oficial debe estar certificado por la liga.</li>
+                        <li><strong>Actualización:</strong> Los anotadores deben participar en cursos de actualización cada 2 años.</li>
+                        <li><strong>Estadísticas:</strong> Se deben registrar estadísticas de bateo (AVG, HR, RBI), picheo (ERA, W, L, SO) y fildeo (AVE).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h3>📞 Contactos</h3>
+        <p>📧 ligadeanotadores@hotmail.com</p>
+        <p>📱 @ligadeanotadores</p>
+        <p>📞 0212 484 0387</p>
+        <div class="redes">
+            <span>⚾ X</span>
+            <span>📷 Instagram</span>
+            <span>💬 Telegram</span>
+        </div>
+        <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.7;">© 2025 Liga de Anotadores - Béisbol menor de Venezuela</p>
+    </footer>
+</body>
+</html>

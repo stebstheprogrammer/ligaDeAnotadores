@@ -18,6 +18,26 @@
         .breadcrumb a:hover {
             text-decoration: underline;
         }
+        /* Fix para dropdown - evitar que se cierre */
+        .nav-item.dropdown:hover .dropdown-content {
+            display: block !important;
+        }
+
+        .dropdown-content {
+            margin-top: 0 !important;
+            top: 100%;
+        }
+
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -34,17 +54,30 @@
     </header>
 
     <nav>
-        <a href="index.html">Inicio</a>
-        <a href="quienes-somos.html" class="active">Quienes somos</a>
-        <a href="liga.html">Liga</a>
-        <a href="#">Resultados</a>
-        <a href="#">Estadísticas</a>
+        <div class="nav-item"><a href="index.html" class="nav-link">Inicio</a></div>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle">Béisbol ▼</a>
+            <div class="dropdown-content">
+                <a href="beisbol.html?liga=Juvenil UCV">Juvenil UCV</a>
+                <a href="beisbol.html?liga=Limenor">Limenor</a>
+                <a href="beisbol.html?liga=Monumental">Monumental</a>
+                <a href="beisbol.html?liga=Popular">Popular</a>
+                <a href="beisbol.html?liga=Unimet">Unimet</a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle">Sóftbol ▼</a>
+            <div class="dropdown-content">
+                <a href="softbol.html?liga=Chato Candela">Chato Candela</a>
+                <a href="softbol.html?liga=Intervecinal">Intervecinal</a>
+            </div>
+        </div>
+        <div class="nav-item"><a href="reglas.html" class="nav-link">Reglas</a></div>
+        <div class="nav-item"><a href="quienes-somos.html" class="nav-link active">Quienes somos</a></div>
     </nav>
 
-    <div class="hero">
-        <h1>Quiénes Somos</h1>
-        <p>Conoce nuestra historia, misión y el corazón de la liga</p>
-    </div>
+    <!-- Header de liga seleccionada -->
+    <div class="liga-seleccionada-header">Conoce la historia tras cada out anotado</div>
 
     <div class="quienes-somos-container">
         <!-- Menú lateral -->
@@ -103,9 +136,9 @@
 
     <footer>
         <h3>📞 Contactos</h3>
-        <p>📧 contacto@ligadeanotadores.com</p>
-        <p>📱 @ligadeanotadores (IG / X)</p>
-        <p>📞 +58 412-1234567</p>
+        <p>📧 ligadeanotadores@hotmail.com</p>
+        <p>📱 @ligadeanotadores</p>
+        <p>📞 0212 484 0387</p>
         <div class="redes">
             <span>⚾ X</span>
             <span>📷 Instagram</span>
@@ -305,9 +338,6 @@
 
         // Cargar reseña histórica por defecto al iniciar la página
         document.addEventListener('DOMContentLoaded', function() {
-            // No es necesario llamar a mostrarContenido porque ya está la reseña en el HTML
-            // Pero podemos marcar el link activo
-            // Como es la reseña histórica, no hay un link directo, así que no marcamos ninguno
             console.log('Página Quienes Somos cargada');
         });
     </script>

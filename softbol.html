@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga de Anotadores - Sóftbol</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Mismos estilos que beisbol.html */
+        .liga-container { display: flex; flex-wrap: wrap; max-width: 1400px; margin: 2rem auto; padding: 0 2rem; gap: 2rem; }
+        .categorias-sidebar { flex: 1; min-width: 280px; background: #f8fafc; border-radius: 15px; padding: 1.5rem; border: 1px solid #e5e7eb; height: fit-content; }
+        .categorias-sidebar h3 { color: var(--primary-blue); margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--secondary-blue); display: flex; align-items: center; gap: 0.5rem; }
+        .categorias-lista { list-style: none; }
+        .categorias-lista li { margin-bottom: 0.5rem; }
+        .categorias-lista a { display: block; text-decoration: none; color: var(--black); padding: 0.7rem 1rem; border-radius: 8px; transition: 0.2s; background: white; border: 1px solid #e5e7eb; }
+        .categorias-lista a:hover { background: var(--secondary-blue); border-color: var(--primary-blue); }
+        .categorias-lista a.active { background: var(--primary-blue); color: white; border-color: var(--primary-blue); }
+        .selector-temporadas { display: flex; gap: 1rem; margin-bottom: 2rem; background: white; padding: 0.5rem; border-radius: 10px; border: 1px solid #e5e7eb; }
+        .temporada-btn { padding: 0.8rem 1.5rem; border: none; background: transparent; font-size: 1rem; font-weight: 600; color: #64748b; cursor: pointer; border-radius: 8px; transition: 0.2s; flex: 1; }
+        .temporada-btn:hover { background: var(--secondary-blue); color: var(--primary-blue); }
+        .temporada-btn.active { background: var(--primary-blue); color: white; }
+        .liga-content { flex: 3; min-width: 300px; }
+        .subnav { display: flex; gap: 0.5rem; margin-bottom: 2rem; background: white; padding: 0.5rem; border-radius: 10px; border: 1px solid #e5e7eb; }
+        .subnav-btn { padding: 0.8rem 1.5rem; border: none; background: transparent; font-size: 1rem; font-weight: 600; color: #64748b; cursor: pointer; border-radius: 8px; transition: 0.2s; flex: 1; }
+        .subnav-btn:hover { background: var(--secondary-blue); color: var(--primary-blue); }
+        .subnav-btn.active { background: var(--primary-blue); color: white; }
+        .subnav-secundario { display: flex; gap: 0.5rem; margin: 1rem 0 1.5rem 0; background: #f8fafc; padding: 0.4rem; border-radius: 8px; border: 1px solid #e5e7eb; }
+        .subnav-secundario-btn { padding: 0.6rem 1.2rem; border: none; background: transparent; font-size: 0.95rem; font-weight: 600; color: #64748b; cursor: pointer; border-radius: 6px; transition: 0.2s; flex: 1; }
+        .subnav-secundario-btn:hover { background: var(--secondary-blue); color: var(--primary-blue); }
+        .subnav-secundario-btn.active { background: var(--primary-blue); color: white; }
+        .seccion-container { background: white; border-radius: 15px; padding: 1.5rem; border: 1px solid #e5e7eb; }
+        .seccion-container h2 { color: var(--primary-blue); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--secondary-blue); }
+        .table-container { overflow-x: auto; margin-top: 1rem; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        .data-table th { background: var(--primary-blue); color: white; padding: 0.8rem; text-align: left; cursor: pointer; }
+        .data-table td { padding: 0.8rem; border-bottom: 1px solid #e5e7eb; }
+        .data-table tr:hover { background: #f8fafc; }
+        .filtros { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .filtro-select { padding: 0.6rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; background: white; min-width: 200px; }
+        .partidos-lista { display: flex; flex-direction: column; gap: 0.8rem; }
+        .partido-item { display: flex; align-items: center; padding: 1rem; background: #f8fafc; border-radius: 10px; border: 1px solid #e5e7eb; transition: 0.2s; flex-wrap: wrap; gap: 1rem; }
+        .partido-item:hover { border-color: var(--primary-blue); background: white; }
+        .partido-equipos { flex: 2; display: flex; align-items: center; gap: 1rem; min-width: 200px; }
+        .partido-equipo { font-weight: 600; }
+        .partido-vs { color: var(--primary-blue); font-weight: 700; }
+        .partido-resultado { font-weight: 700; font-size: 1.1rem; min-width: 80px; text-align: center; }
+        .partido-lugar { flex: 1; color: #64748b; font-size: 0.9rem; min-width: 150px; }
+        .partido-fecha { flex: 1; color: #64748b; font-size: 0.9rem; text-align: right; min-width: 120px; }
+        .badge-posicion { display: inline-block; background: var(--secondary-blue); color: var(--primary-blue); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        @media (max-width: 768px) { .liga-container { flex-direction: column; } .partido-item { flex-direction: column; align-items: flex-start; } .subnav, .subnav-secundario, .selector-temporadas { flex-direction: column; } }
+        
+        /* Fix para dropdown - evitar que se cierre */
+        .nav-item.dropdown:hover .dropdown-content {
+            display: block !important;
+        }
+
+        .dropdown-content {
+            margin-top: 0 !important;
+            top: 100%;
+        }
+
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="img/logo.png" alt="Liga de Anotadores" class="logo-img">
+            <div class="logo-text">Liga de Anotadores<span></span></div>
+        </div>
+        <div class="buscador"><input type="text" placeholder="Buscar..."></div>
+    </header>
+
+    <nav>
+        <div class="nav-item"><a href="index.html" class="nav-link">Inicio</a></div>
+        <div class="nav-item dropdown">
+            <span class="nav-link">Béisbol ▼</span>
+            <div class="dropdown-content">
+                <a href="beisbol.html?liga=Juvenil UCV">Juvenil UCV</a>
+                <a href="beisbol.html?liga=Limenor">Limenor</a>
+                <a href="beisbol.html?liga=Monumental">Monumental</a>
+                <a href="beisbol.html?liga=Popular">Popular</a>
+                <a href="beisbol.html?liga=Unimet">Unimet</a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <span class="nav-link">Sóftbol ▼</span>
+            <div class="dropdown-content">
+                <a href="#" onclick="cambiarLiga('Chato Candela')">Chato Candela</a>
+                <a href="#" onclick="cambiarLiga('Intervecinal')">Intervecinal</a>
+            </div>
+        </div>
+        <div class="nav-item"><a href="reglas.html" class="nav-link">Reglas</a></div>
+        <div class="nav-item"><a href="quienes-somos.html" class="nav-link">Quienes somos</a></div>
+    </nav>
+
+    <div class="liga-seleccionada-header" id="liga-header">Chato Candela</div>
+
+    <div class="liga-container">
+        <aside class="categorias-sidebar">
+            <h3><span>🥎</span> Categorías</h3>
+            <div id="categorias-lista"></div>
+        </aside>
+
+        <main class="liga-content">
+            <div class="selector-temporadas">
+                <button class="temporada-btn" onclick="seleccionarTemporada('2022-2023')">2022-2023</button>
+                <button class="temporada-btn" onclick="seleccionarTemporada('2023-2024')">2023-2024</button>
+                <button class="temporada-btn active" onclick="seleccionarTemporada('2024-2025')">2024-2025</button>
+            </div>
+
+            <div class="subnav">
+                <button class="subnav-btn" onclick="mostrarSeccion('calendario')">📅 Calendario</button>
+                <button class="subnav-btn active" onclick="mostrarSeccion('lideres')">📊 Líderes</button>
+                <button class="subnav-btn" onclick="mostrarSeccion('jugadores')">👥 Jugadores</button>
+            </div>
+
+            <div id="resena-container" class="resena-container"></div>
+
+            <div id="posicion-equipos" class="posicion-equipos">
+                <div class="posicion-header" onclick="togglePosicion()">
+                    <h3><span>📊</span> Posición de equipos - <span id="categoria-actual">Lanzamiento lento</span></h3>
+                    <span class="posicion-toggle">▼</span>
+                </div>
+                <div class="posicion-contenido">
+                    <table class="posiciones-tabla" id="tabla-posiciones">
+                        <thead><tr><th>#</th><th>Equipo</th><th>JJ</th><th>G</th><th>E</th><th>P</th><th>AVE</th></tr></thead>
+                        <tbody id="posiciones-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="seccion-calendario" class="seccion-container" style="display: none;">
+                <h2><span>📅</span> Calendario de juegos</h2>
+                <div class="partidos-lista" id="partidos-lista"></div>
+            </div>
+
+            <div id="seccion-lideres" class="seccion-container">
+                <h2><span>📊</span> Líderes</h2>
+                <div class="subnav-secundario">
+                    <button class="subnav-secundario-btn active" onclick="mostrarSubLideres('bateo')">🦇 Bateo</button>
+                    <button class="subnav-secundario-btn" onclick="mostrarSubLideres('picheo')">⚡ Picheo</button>
+                </div>
+                <div id="subseccion-bateo"><div class="table-container"><table class="data-table" id="tabla-bateo"><thead><tr><th>Jugador</th><th>Equipo</th><th>AVG</th><th>HR</th><th>RBI</th><th>H</th><th>AB</th></tr></thead><tbody id="tabla-bateo-body"></tbody></table></div></div>
+                <div id="subseccion-picheo" style="display: none;"><div class="table-container"><table class="data-table" id="tabla-picheo"><thead><tr><th>Jugador</th><th>Equipo</th><th>ERA</th><th>W</th><th>L</th><th>SO</th><th>IP</th></tr></thead><tbody id="tabla-picheo-body"></tbody></table></div></div>
+            </div>
+
+            <div id="seccion-jugadores" class="seccion-container" style="display: none;">
+                <h2><span>👥</span> Jugadores</h2>
+                <p>Lista completa de jugadores de <strong id="liga-jugadores"></strong> - <strong id="categoria-jugadores"></strong></p>
+                <div class="filtros">
+                    <select class="filtro-select" id="filtro-equipo-jugadores"><option value="todos">Todos los equipos</option></select>
+                    <select class="filtro-select" id="filtro-posicion-jugadores">
+                        <option value="todos">Todas las posiciones</option>
+                        <option value="C">Cácher</option><option value="1B">Primera base</option>
+                        <option value="2B">Segunda base</option><option value="3B">Tercera base</option>
+                        <option value="SS">Shortstop</option><option value="LF">Jardinero izquierdo</option>
+                        <option value="CF">Jardinero central</option><option value="RF">Jardinero derecho</option>
+                        <option value="P">Lanzador</option>
+                    </select>
+                </div>
+                <div class="table-container"><table class="data-table" id="tabla-jugadores"><thead><tr><th>Jugador</th><th>Equipo</th><th>Posición</th><th>Batea</th><th>Lanza</th><th>#</th></tr></thead><tbody id="tabla-jugadores-body"></tbody></table></div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <h3>📞 Contactos</h3>
+        <p>📧 contacto@ligadeanotadores.com</p>
+        <p>📱 @ligadeanotadores (IG / X)</p>
+        <p>📞 +58 412-1234567</p>
+        <div class="redes"><span>⚾ X</span><span>📷 Instagram</span><span>💬 Telegram</span></div>
+        <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.7;">© 2025 Liga de Anotadores - Béisbol menor de Venezuela</p>
+    </footer>
+
+    <script>
+        const ligasData = {
+            "Chato Candela": { 
+                categorias: ["Lanzamiento lento"],
+                reseña: "El Torneo Chato Candela es el evento más emblemático del sóftbol venezolano, con más de 20 años de tradición en la modalidad de lanzamiento lento."
+            },
+            "Intervecinal": { 
+                categorias: ["Lanzamiento lento", "Lanzamiento modificado"],
+                reseña: "La Liga Intervecinal reúne a las mejores comunidades del país, compitiendo en dos modalidades: lanzamiento lento y lanzamiento modificado."
+            }
+        };
+
+        const equiposPorLiga = {
+            "Chato Candela": { "Lanzamiento lento": ["Candela A", "Candela B", "Candela C", "Candela D"] },
+            "Intervecinal": { "Lanzamiento lento": ["Inter Lento A", "Inter Lento B", "Inter Lento C"], "Lanzamiento modificado": ["Inter Mod A", "Inter Mod B", "Inter Mod C", "Inter Mod D"] }
+        };
+
+        const lugares = ["Estadio Monumental", "Parque Deportivo", "Campo Central", "Complejo Deportivo"];
+
+        let ligaSeleccionada = "Chato Candela";
+        let categoriaSeleccionada = "Lanzamiento lento";
+        let temporadaSeleccionada = "2024-2025";
+        let posicionMinimizada = false;
+
+        function togglePosicion() {
+            posicionMinimizada = !posicionMinimizada;
+            const panel = document.getElementById('posicion-equipos');
+            if (posicionMinimizada) panel.classList.add('minimizado');
+            else panel.classList.remove('minimizado');
+        }
+
+        function cambiarLiga(liga) {
+            ligaSeleccionada = liga;
+            const categorias = ligasData[liga].categorias;
+            categoriaSeleccionada = categorias[0];
+            document.getElementById('liga-header').textContent = liga;
+            cargarCategorias();
+            actualizarResena();
+            actualizarPosiciones();
+            actualizarCalendario();
+            actualizarTablasLideres();
+            actualizarTablaJugadores();
+        }
+
+        function cargarCategorias() {
+            const container = document.getElementById('categorias-lista');
+            container.innerHTML = '<ul class="categorias-lista">' + ligasData[ligaSeleccionada].categorias.map(cat => `<li><a href="#" class="${cat === categoriaSeleccionada ? 'active' : ''}" onclick="seleccionarCategoria('${cat}'); return false;">${cat}</a></li>`).join('') + '</ul>';
+        }
+
+        function seleccionarCategoria(categoria) {
+            categoriaSeleccionada = categoria;
+            document.getElementById('categoria-actual').textContent = categoria;
+            cargarCategorias();
+            actualizarResena();
+            actualizarPosiciones();
+            actualizarCalendario();
+            actualizarTablasLideres();
+            actualizarTablaJugadores();
+        }
+
+        function actualizarResena() {
+            const container = document.getElementById('resena-container');
+            container.innerHTML = `<h3><span>📖</span> Reseña - ${ligaSeleccionada} - ${categoriaSeleccionada}</h3><div class="resena-texto">${ligasData[ligaSeleccionada].reseña} La categoría ${categoriaSeleccionada} es una de las más competitivas del circuito.</div>`;
+        }
+
+        function getEquiposActuales() { return equiposPorLiga[ligaSeleccionada]?.[categoriaSeleccionada] || ["Equipo A", "Equipo B"]; }
+
+        function actualizarPosiciones() {
+            const equipos = getEquiposActuales();
+            const tbody = document.getElementById('posiciones-body');
+            tbody.innerHTML = '';
+            equipos.forEach((equipo, index) => {
+                const g = Math.floor(Math.random() * 10) + 5;
+                const e = Math.floor(Math.random() * 3);
+                const p = Math.floor(Math.random() * 8) + 2;
+                const jj = g + e + p;
+                tbody.innerHTML += `<tr><td>${index+1}</td><td><strong>${equipo}</strong></td><td>${jj}</td><td>${g}</td><td>${e}</td><td>${p}</td><td>${(g/jj).toFixed(3)}</td></tr>`;
+            });
+        }
+
+        function actualizarCalendario() {
+            const equipos = getEquiposActuales();
+            const container = document.getElementById('partidos-lista');
+            container.innerHTML = '';
+            for (let i = 0; i < 6; i++) {
+                const e1 = equipos[Math.floor(Math.random() * equipos.length)];
+                let e2 = equipos[Math.floor(Math.random() * equipos.length)];
+                while (e2 === e1) e2 = equipos[Math.floor(Math.random() * equipos.length)];
+                const lugar = lugares[Math.floor(Math.random() * lugares.length)];
+                container.innerHTML += `<div class="partido-item"><div class="partido-equipos"><span class="partido-equipo">${e1}</span><span class="partido-vs">vs</span><span class="partido-equipo">${e2}</span></div><div class="partido-resultado">${Math.floor(Math.random() * 15)} - ${Math.floor(Math.random() * 15)}</div><div class="partido-lugar">📍 ${lugar}</div><div class="partido-fecha">📅 ${Math.floor(Math.random() * 28) + 1}/${Math.floor(Math.random() * 12) + 1}/2026</div></div>`;
+            }
+        }
+
+        function actualizarTablasLideres() {
+            const equipos = getEquiposActuales();
+            const bateoData = equipos.map((e,i) => ({ jugador: `Jugador ${i+1}`, equipo: e, avg: (Math.random()*0.2+0.3).toFixed(3), hr: Math.floor(Math.random()*8), rbi: Math.floor(Math.random()*30), h: Math.floor(Math.random()*40), ab: Math.floor(Math.random()*80)+60 }));
+            const picheoData = equipos.map((e,i) => ({ jugador: `Lanzador ${i+1}`, equipo: e, era: (Math.random()*5+2).toFixed(2), w: Math.floor(Math.random()*8), l: Math.floor(Math.random()*5), so: Math.floor(Math.random()*40), ip: (Math.random()*50+20).toFixed(1) }));
+            document.getElementById('tabla-bateo-body').innerHTML = bateoData.map(d => `<tr><td><strong>${d.jugador}</strong></td><td>${d.equipo}</td><td>${d.avg}</td><td>${d.hr}</td><td>${d.rbi}</td><td>${d.h}</td><td>${d.ab}</td></tr>`).join('');
+            document.getElementById('tabla-picheo-body').innerHTML = picheoData.map(d => `<tr><td><strong>${d.jugador}</strong></td><td>${d.equipo}</td><td>${d.era}</td><td>${d.w}</td><td>${d.l}</td><td>${d.so}</td><td>${d.ip}</td></tr>`).join('');
+        }
+
+        function actualizarTablaJugadores() {
+            const equipos = getEquiposActuales();
+            const posiciones = ["C","1B","2B","3B","SS","LF","CF","RF","P"];
+            const manos = ["Derecha","Izquierda"];
+            let jugadores = [];
+            equipos.forEach(equipo => { for (let i = 0; i < 10; i++) jugadores.push({ nombre: `Jugador ${i+1}`, equipo: equipo, posicion: posiciones[Math.floor(Math.random()*posiciones.length)], batea: manos[Math.floor(Math.random()*manos.length)], lanza: manos[Math.floor(Math.random()*manos.length)], numero: Math.floor(Math.random()*99)+1 }); });
+            document.getElementById('liga-jugadores').textContent = ligaSeleccionada;
+            document.getElementById('categoria-jugadores').textContent = categoriaSeleccionada;
+            const selectEquipo = document.getElementById('filtro-equipo-jugadores');
+            selectEquipo.innerHTML = '<option value="todos">Todos los equipos</option>';
+            equipos.forEach(e => selectEquipo.innerHTML += `<option value="${e}">${e}</option>`);
+            document.getElementById('tabla-jugadores-body').innerHTML = jugadores.map(j => `<tr><td><strong>${j.nombre}</strong></td><td>${j.equipo}</td><td><span class="badge-posicion">${j.posicion}</span></td><td>${j.batea}</td><td>${j.lanza}</td><td>${j.numero}</td></tr>`).join('');
+        }
+
+        function seleccionarTemporada(temporada) {
+            temporadaSeleccionada = temporada;
+            document.querySelectorAll('.temporada-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            actualizarPosiciones(); actualizarCalendario(); actualizarTablasLideres(); actualizarTablaJugadores();
+        }
+
+        function mostrarSeccion(seccion) {
+            document.querySelectorAll('.subnav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('seccion-calendario').style.display = 'none';
+            document.getElementById('seccion-lideres').style.display = 'none';
+            document.getElementById('seccion-jugadores').style.display = 'none';
+            document.getElementById(`seccion-${seccion}`).style.display = 'block';
+            if (seccion !== 'calendario') { posicionMinimizada = true; document.getElementById('posicion-equipos').classList.add('minimizado'); }
+            else { posicionMinimizada = false; document.getElementById('posicion-equipos').classList.remove('minimizado'); }
+        }
+
+        function mostrarSubLideres(tipo) {
+            document.querySelectorAll('.subnav-secundario-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('subseccion-bateo').style.display = tipo === 'bateo' ? 'block' : 'none';
+            document.getElementById('subseccion-picheo').style.display = tipo === 'picheo' ? 'block' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarCategorias();
+            actualizarResena();
+            actualizarPosiciones();
+            actualizarCalendario();
+            actualizarTablasLideres();
+            actualizarTablaJugadores();
+            document.getElementById('filtro-equipo-jugadores').addEventListener('change', () => actualizarTablaJugadores());
+            document.getElementById('filtro-posicion-jugadores').addEventListener('change', () => actualizarTablaJugadores());
+        });
+    </script>
+</body>
+</html>

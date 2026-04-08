@@ -370,155 +370,162 @@
                 grid-template-columns: 1fr;
             }
         }
-        /* Resultados del fin de semana */
-.resultados-semana {
-    background: white;
-    border-radius: 15px;
-    padding: 1.5rem;
-    margin: 1rem 2rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    border: 1px solid #e5e7eb;
-}
 
-.resultados-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 3px solid var(--secondary-blue);
-}
+        /* Resultados del fin de semana - Versión compacta */
+        .resultados-semana {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin: 1rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #e5e7eb;
+        }
 
-.resultados-icono {
-    font-size: 2rem;
-}
+        .resultados-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-blue);
+        }
 
-.resultados-header h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-blue);
-    margin: 0;
-    flex: 1;
-}
+        .resultados-icono {
+            font-size: 1.3rem;
+        }
 
-.resultados-fecha {
-    background: var(--secondary-blue);
-    padding: 0.3rem 1rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--black);
-}
+        .resultados-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin: 0;
+            flex: 1;
+        }
 
-.resultados-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-}
+        .resultados-fecha {
+            background: var(--secondary-blue);
+            padding: 0.2rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--black);
+        }
 
-.resultado-item {
-    padding: 0.8rem 1rem;
-    background: #f8fafc;
-    border-radius: 10px;
-    transition: 0.2s;
-    border: 1px solid #e5e7eb;
-}
+        .resultados-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
 
-.resultado-item:hover {
-    background: white;
-    border-color: var(--primary-blue);
-    transform: translateX(5px);
-}
+        .resultado-item {
+            padding: 0.4rem 0.6rem;
+            background: #f8fafc;
+            border-radius: 6px;
+            transition: 0.2s;
+            border: 1px solid #e5e7eb;
+            font-size: 0.85rem;
+        }
 
-.resultado-equipos {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    font-weight: 600;
-}
+        .resultado-item:hover {
+            background: white;
+            border-color: var(--primary-blue);
+        }
 
-.equipo-local, .equipo-visitante {
-    flex: 1;
-}
+        .resultado-equipos {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            font-weight: 600;
+        }
 
-.equipo-local {
-    text-align: right;
-    color: var(--black);
-}
+        .equipo-local, .equipo-visitante {
+            font-weight: 600;
+        }
 
-.equipo-visitante {
-    text-align: left;
-    color: var(--black);
-}
+        .equipo-local {
+            text-align: right;
+        }
 
-.resultado-marcador {
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: var(--primary-blue);
-    background: white;
-    padding: 0.2rem 0.6rem;
-    border-radius: 8px;
-    min-width: 40px;
-    text-align: center;
-}
+        .resultado-marcador {
+            font-weight: 800;
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+        }
 
-.resultado-guion {
-    font-weight: 800;
-    color: #64748b;
-}
+        .resultado-guion {
+            font-weight: 800;
+            color: #64748b;
+        }
 
-.resultado-detalle {
-    font-size: 0.8rem;
-    color: #64748b;
-    margin-top: 0.5rem;
-    padding-left: 0.5rem;
-    border-left: 3px solid var(--secondary-blue);
-}
+        .resultado-liga {
+            color: #64748b;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: normal;
+        }
 
-.resultados-footer {
-    text-align: center;
-    padding-top: 1rem;
-    border-top: 1px solid #e5e7eb;
-    margin-top: 0.5rem;
-}
+        .resultado-fecha {
+            color: #64748b;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: normal;
+        }
 
-.ver-todos {
-    display: inline-block;
-    color: var(--primary-blue);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: 0.2s;
-}
+        .resultados-footer {
+            text-align: center;
+            padding-top: 0.5rem;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 0.5rem;
+        }
 
-.ver-todos:hover {
-    transform: translateX(5px);
-    text-decoration: underline;
-}
+        .ver-todos {
+            display: inline-block;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
 
-@media (max-width: 768px) {
-    .resultados-semana {
-        margin: 1rem;
-        padding: 1rem;
-    }
-    
-    .resultados-header {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .resultado-equipos {
-        justify-content: center;
-    }
-    
-    .equipo-local, .equipo-visitante {
-        flex: 0 1 auto;
-    }
-}
+        .ver-todos:hover {
+            transform: translateX(3px);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .resultados-semana {
+                margin: 0.5rem 1rem;
+                padding: 0.8rem 1rem;
+            }
+            
+            .resultado-equipos {
+                justify-content: center;
+            }
+        }
+
+        /* Fix para dropdown - evitar que se cierre */
+        .nav-item.dropdown:hover .dropdown-content {
+            display: block !important;
+        }
+
+        .dropdown-content {
+            margin-top: 0 !important;
+            top: 100%;
+        }
+
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -535,13 +542,29 @@
     </header>
     
     <nav>
-        <a href="index.html" class="active">Inicio</a>
-        <a href="quienes-somos.html">Quienes somos</a>
-        <a href="liga.html">Liga</a>
-        <a href="#">Resultados</a>
-        <a href="#">Estadísticas</a>
+        <div class="nav-item"><a href="index.html" class="nav-link active">Inicio</a></div>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle">Béisbol ▼</a>
+            <div class="dropdown-content">
+                <a href="beisbol.html?liga=Juvenil UCV">Juvenil UCV</a>
+                <a href="beisbol.html?liga=Limenor">Limenor</a>
+                <a href="beisbol.html?liga=Monumental">Monumental</a>
+                <a href="beisbol.html?liga=Popular">Popular</a>
+                <a href="beisbol.html?liga=Unimet">Unimet</a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle">Sóftbol ▼</a>
+            <div class="dropdown-content">
+                <a href="softbol.html?liga=Chato Candela">Chato Candela</a>
+                <a href="softbol.html?liga=Intervecinal">Intervecinal</a>
+            </div>
+        </div>
+        <div class="nav-item"><a href="reglas.html" class="nav-link">Reglas</a></div>
+        <div class="nav-item"><a href="quienes-somos.html" class="nav-link">Quienes somos</a></div>
     </nav>
-        <div class="resultados-semana">
+
+    <div class="resultados-semana">
         <div class="resultados-header">
             <span class="resultados-icono">⚾</span>
             <h3>Resultados del fin de semana</h3>
@@ -555,8 +578,9 @@
                     <span class="resultado-guion">-</span>
                     <span class="resultado-marcador">2</span>
                     <span class="equipo-visitante">Lideres de Caracas</span>
+                    <span class="resultado-liga">🏆 Monumental</span>
+                    <span class="resultado-fecha">📅 27/03</span>
                 </div>
-                <div class="resultado-detalle">🏟️ Estadio Monumental | 7 innings</div>
             </div>
             <div class="resultado-item">
                 <div class="resultado-equipos">
@@ -565,18 +589,9 @@
                     <span class="resultado-guion">-</span>
                     <span class="resultado-marcador">3</span>
                     <span class="equipo-visitante">Caciques de Vargas</span>
+                    <span class="resultado-liga">🏆 Monumental</span>
+                    <span class="resultado-fecha">📅 27/03</span>
                 </div>
-                <div class="resultado-detalle">🌟 HR de Luis González en la 6ta</div>
-            </div>
-            <div class="resultado-item">
-                <div class="resultado-equipos">
-                    <span class="equipo-local">Guerreros de Aragua</span>
-                    <span class="resultado-marcador">7</span>
-                    <span class="resultado-guion">-</span>
-                    <span class="resultado-marcador">5</span>
-                    <span class="equipo-visitante">Titanes de La Guaira</span>
-                </div>
-                <div class="resultado-detalle">🔥 Rally de 4 carreras en la 8va</div>
             </div>
             <div class="resultado-item">
                 <div class="resultado-equipos">
@@ -585,8 +600,9 @@
                     <span class="resultado-guion">-</span>
                     <span class="resultado-marcador">4</span>
                     <span class="equipo-visitante">USB</span>
+                    <span class="resultado-liga">🎓 Juvenil UCV</span>
+                    <span class="resultado-fecha">📅 26/03</span>
                 </div>
-                <div class="resultado-detalle">📊 Torneo Juvenil UCV</div>
             </div>
             <div class="resultado-item">
                 <div class="resultado-equipos">
@@ -595,15 +611,26 @@
                     <span class="resultado-guion">-</span>
                     <span class="resultado-marcador">2</span>
                     <span class="equipo-visitante">San Bernardino</span>
+                    <span class="resultado-liga">🏘️ Intervecinal</span>
+                    <span class="resultado-fecha">📅 26/03</span>
                 </div>
-                <div class="resultado-detalle">⚡ Extra innings (10 entradas)</div>
+            </div>
+            <div class="resultado-item">
+                <div class="resultado-equipos">
+                    <span class="equipo-local">Candela A</span>
+                    <span class="resultado-marcador">8</span>
+                    <span class="resultado-guion">-</span>
+                    <span class="resultado-marcador">6</span>
+                    <span class="equipo-visitante">Candela B</span>
+                    <span class="resultado-liga">🥎 Chato Candela</span>
+                    <span class="resultado-fecha">📅 25/03</span>
+                </div>
             </div>
         </div>
         <div class="resultados-footer">
             <a href="#" class="ver-todos">Ver todos los resultados →</a>
         </div>
     </div>
-    
 
     <div class="hero">
         <h1>Liga de Anotadores</h1>
@@ -671,9 +698,9 @@
 
     <footer>
         <h3>📞 Contactos</h3>
-        <p>📧 contacto@ligadeanotadores.com</p>
-        <p>📱 @ligadeanotadores (IG / X)</p>
-        <p>📞 +58 412-1234567</p>
+        <p>📧 ligadeanotadores@hotmail.com</p>
+        <p>📱 @ligadeanotadores</p>
+        <p>📞 0212 484 0387</p>
         <div class="redes">
             <span>⚾ X</span>
             <span>📷 Instagram</span>

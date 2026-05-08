@@ -371,7 +371,7 @@
             }
         }
 
-        /* Resultados del fin de semana - Versión compacta */
+        /* Resultados del fin de semana - Versión compacta con 2 columnas */
         .resultados-semana {
             background: white;
             border-radius: 12px;
@@ -414,18 +414,17 @@
         }
 
         .resultados-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
         }
 
         .resultado-item {
-            padding: 0.4rem 0.6rem;
+            padding: 0.5rem 0.8rem;
             background: #f8fafc;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: 0.2s;
             border: 1px solid #e5e7eb;
-            font-size: 0.85rem;
         }
 
         .resultado-item:hover {
@@ -439,20 +438,20 @@
             flex-wrap: wrap;
             gap: 0.3rem;
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .equipo-local, .equipo-visitante {
             font-weight: 600;
         }
 
-        .equipo-local {
-            text-align: right;
-        }
-
         .resultado-marcador {
             font-weight: 800;
             color: var(--primary-blue);
-            font-size: 0.9rem;
+            font-size: 1rem;
+            background: white;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
         }
 
         .resultado-guion {
@@ -463,36 +462,15 @@
         .resultado-liga {
             color: #64748b;
             font-size: 0.7rem;
-            margin-left: 0.5rem;
+            margin-left: 0.3rem;
             font-weight: normal;
         }
 
         .resultado-fecha {
             color: #64748b;
             font-size: 0.7rem;
-            margin-left: 0.5rem;
+            margin-left: 0.3rem;
             font-weight: normal;
-        }
-
-        .resultados-footer {
-            text-align: center;
-            padding-top: 0.5rem;
-            border-top: 1px solid #e5e7eb;
-            margin-top: 0.5rem;
-        }
-
-        .ver-todos {
-            display: inline-block;
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: 0.2s;
-        }
-
-        .ver-todos:hover {
-            transform: translateX(3px);
-            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
@@ -501,8 +479,9 @@
                 padding: 0.8rem 1rem;
             }
             
-            .resultado-equipos {
-                justify-content: center;
+            .resultados-grid {
+                grid-template-columns: 1fr;
+                gap: 0.4rem;
             }
         }
 
@@ -526,6 +505,22 @@
             top: 100%;
             margin-top: 0;
         }
+        .resultado-item {
+    padding: 0.5rem 0.8rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    transition: 0.2s;
+    border: 1px solid #e5e7eb;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+.resultado-item:hover {
+    background: white;
+    border-color: var(--primary-blue);
+    cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -571,65 +566,74 @@
             <span class="resultados-fecha">27-28 Mar 2025</span>
         </div>
         <div class="resultados-grid">
-            <div class="resultado-item">
-                <div class="resultado-equipos">
-                    <span class="equipo-local">Potros de Bolívar</span>
-                    <span class="resultado-marcador">4</span>
-                    <span class="resultado-guion">-</span>
-                    <span class="resultado-marcador">2</span>
-                    <span class="equipo-visitante">Lideres de Caracas</span>
-                    <span class="resultado-liga">🏆 Monumental</span>
-                    <span class="resultado-fecha">📅 27/03</span>
-                </div>
-            </div>
-            <div class="resultado-item">
-                <div class="resultado-equipos">
-                    <span class="equipo-local">Bravos de Miranda</span>
-                    <span class="resultado-marcador">5</span>
-                    <span class="resultado-guion">-</span>
-                    <span class="resultado-marcador">3</span>
-                    <span class="equipo-visitante">Caciques de Vargas</span>
-                    <span class="resultado-liga">🏆 Monumental</span>
-                    <span class="resultado-fecha">📅 27/03</span>
-                </div>
-            </div>
-            <div class="resultado-item">
-                <div class="resultado-equipos">
-                    <span class="equipo-local">Universidad Central</span>
-                    <span class="resultado-marcador">6</span>
-                    <span class="resultado-guion">-</span>
-                    <span class="resultado-marcador">4</span>
-                    <span class="equipo-visitante">USB</span>
-                    <span class="resultado-liga">🎓 Juvenil UCV</span>
-                    <span class="resultado-fecha">📅 26/03</span>
-                </div>
-            </div>
-            <div class="resultado-item">
-                <div class="resultado-equipos">
-                    <span class="equipo-local">Vecinos Unidos</span>
-                    <span class="resultado-marcador">3</span>
-                    <span class="resultado-guion">-</span>
-                    <span class="resultado-marcador">2</span>
-                    <span class="equipo-visitante">San Bernardino</span>
-                    <span class="resultado-liga">🏘️ Intervecinal</span>
-                    <span class="resultado-fecha">📅 26/03</span>
-                </div>
-            </div>
-            <div class="resultado-item">
-                <div class="resultado-equipos">
-                    <span class="equipo-local">Candela A</span>
-                    <span class="resultado-marcador">8</span>
-                    <span class="resultado-guion">-</span>
-                    <span class="resultado-marcador">6</span>
-                    <span class="equipo-visitante">Candela B</span>
-                    <span class="resultado-liga">🥎 Chato Candela</span>
-                    <span class="resultado-fecha">📅 25/03</span>
-                </div>
-            </div>
+    <a href="box-score.html?liga=Monumental&categoria=Juvenil&local=Potros%20de%20Bolívar&local_runs=4&visitante=Lideres%20de%20Caracas&visitante_runs=2&fecha=27/03/2025&lugar=Estadio%20Monumental" class="resultado-item">
+        <div class="resultado-equipos">
+            <span class="equipo-local">Potros de Bolívar</span>
+            <span class="resultado-marcador">4</span>
+            <span class="resultado-guion">-</span>
+            <span class="resultado-marcador">2</span>
+            <span class="equipo-visitante">Lideres de Caracas</span>
+            <span class="resultado-liga">🏆 Monumental</span>
+            <span class="resultado-fecha">📅 27/03</span>
         </div>
-        <div class="resultados-footer">
-            <a href="#" class="ver-todos">Ver todos los resultados →</a>
+    </a>
+    <a href="box-score.html?liga=Monumental&categoria=Juvenil&local=Potros%20de%20Bolívar&local_runs=4&visitante=Lideres%20de%20Caracas&visitante_runs=2&fecha=27/03/2025&lugar=Estadio%20Monumental" class="resultado-item">
+        <div class="resultado-equipos">
+            <span class="equipo-local">Bravos de Miranda</span>
+            <span class="resultado-marcador">5</span>
+            <span class="resultado-guion">-</span>
+            <span class="resultado-marcador">3</span>
+            <span class="equipo-visitante">Caciques de Vargas</span>
+            <span class="resultado-liga">🏆 Monumental</span>
+            <span class="resultado-fecha">📅 27/03</span>
         </div>
+    </a>
+    <a href="box-score.html?liga=Monumental&categoria=Juvenil&local=Potros%20de%20Bolívar&local_runs=4&visitante=Lideres%20de%20Caracas&visitante_runs=2&fecha=27/03/2025&lugar=Estadio%20Monumental" class="resultado-item">
+        <div class="resultado-equipos">
+            <span class="equipo-local">Universidad Central</span>
+            <span class="resultado-marcador">6</span>
+            <span class="resultado-guion">-</span>
+            <span class="resultado-marcador">4</span>
+            <span class="equipo-visitante">USB</span>
+            <span class="resultado-liga">🎓 Juvenil UCV</span>
+            <span class="resultado-fecha">📅 26/03</span>
+        </div>
+    </a>
+    <a href="box-score.html?liga=Monumental&categoria=Juvenil&local=Potros%20de%20Bolívar&local_runs=4&visitante=Lideres%20de%20Caracas&visitante_runs=2&fecha=27/03/2025&lugar=Estadio%20Monumental" class="resultado-item">
+        <div class="resultado-equipos">
+            <span class="equipo-local">Vecinos Unidos</span>
+            <span class="resultado-marcador">3</span>
+            <span class="resultado-guion">-</span>
+            <span class="resultado-marcador">2</span>
+            <span class="equipo-visitante">San Bernardino</span>
+            <span class="resultado-liga">🏘️ Intervecinal</span>
+            <span class="resultado-fecha">📅 26/03</span>
+        </div>
+    </a>
+    <a href="box-score.html?liga=Monumental&categoria=Juvenil&local=Potros%20de%20Bolívar&local_runs=4&visitante=Lideres%20de%20Caracas&visitante_runs=2&fecha=27/03/2025&lugar=Estadio%20Monumental" class="resultado-item">
+        <div class="resultado-equipos">
+            <span class="equipo-local">Candela A</span>
+            <span class="resultado-marcador">8</span>
+            <span class="resultado-guion">-</span>
+            <span class="resultado-marcador">6</span>
+            <span class="equipo-visitante">Candela B</span>
+            <span class="resultado-liga">🥎 Chato Candela</span>
+            <span class="resultado-fecha">📅 25/03</span>
+        </div>
+    </a>
+    <a href="box-score.html?liga=Monumental&categoria=Juvenil&local=Potros%20de%20Bolívar&local_runs=4&visitante=Lideres%20de%20Caracas&visitante_runs=2&fecha=27/03/2025&lugar=Estadio%20Monumental" class="resultado-item">
+        <div class="resultado-equipos">
+            <span class="equipo-local">Inter Lento A</span>
+            <span class="resultado-marcador">7</span>
+            <span class="resultado-guion">-</span>
+            <span class="resultado-marcador">4</span>
+            <span class="equipo-visitante">Inter Lento B</span>
+            <span class="resultado-liga">🏘️ Intervecinal</span>
+            <span class="resultado-fecha">📅 25/03</span>
+        </div>
+    </a>
+    <!-- ... más resultados ... -->
+</div>
     </div>
 
     <div class="hero">

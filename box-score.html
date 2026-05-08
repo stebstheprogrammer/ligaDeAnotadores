@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga de Anotadores - Box Score</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos específicos para Box Score */
+        .boxscore-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Encabezado del juego */
+        .game-header {
+            background: linear-gradient(145deg, var(--primary-blue), #0066cc);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        .game-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-header .liga-info {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-header .fecha-lugar {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Pizarra */
+        .pizarra {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0 0 15px 15px;
+            overflow-x: auto;
+            margin-bottom: 2rem;
+        }
+
+        .pizarra table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .pizarra th, .pizarra td {
+            padding: 0.8rem 0.5rem;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .pizarra th {
+            background: var(--primary-blue);
+            color: white;
+            font-weight: 600;
+        }
+
+        .pizarra tr:last-child td {
+            border-bottom: none;
+        }
+
+        .equipo-nombre {
+            font-weight: 700;
+            text-align: left;
+            background: #f8fafc;
+        }
+
+        /* Estilo para equipo local en rojo */
+        .equipo-local-nombre {
+            font-weight: 700;
+            text-align: left;
+            background: #fff0f0;
+            color: #d32f2f;
+        }
+
+        /* Sección de box score - dos columnas */
+        .boxscore-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .team-section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        /* Equipo visitante (azul) */
+        .team-section.visitante .team-header {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* Equipo local (rojo) */
+        .team-section.local .team-header {
+            background: #d32f2f;
+            color: white;
+        }
+
+        .team-header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .team-header h2 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .team-header .record {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            padding: 1rem;
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        .stats-table th, .stats-table td {
+            padding: 0.6rem 0.3rem;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .stats-table th {
+            background: #f8fafc;
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .stats-table td {
+            color: #334155;
+        }
+
+        .stats-table tr:hover td {
+            background: #f8fafc;
+        }
+
+        .jugador-nombre {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        /* Sección de lanzadores */
+        .pitchers-section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .pitchers-header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem;
+        }
+
+        .pitchers-header h3 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .pitchers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .pitcher-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .pitcher-name {
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .pitcher-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .pitcher-stat {
+            text-align: center;
+        }
+
+        .pitcher-stat .label {
+            color: #64748b;
+            font-size: 0.7rem;
+        }
+
+        .pitcher-stat .value {
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        /* Jugador destacado */
+        .destacado {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .destacado-icono {
+            background: var(--secondary-blue);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .destacado-info h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.3rem;
+        }
+
+        .destacado-info p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Información del juego */
+        .game-info {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .info-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 0.7rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--black);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .boxscore-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .pitchers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-info {
+                flex-direction: column;
+            }
+            
+            .game-header h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="img/logo.png" alt="Liga de Anotadores" class="logo-img">
+            <div class="logo-text">Liga de Anotadores<span></span></div>
+        </div>
+        <div class="buscador"><input type="text" placeholder="Buscar..."></div>
+    </header>
+
+    <nav>
+        <div class="nav-item"><a href="index.html" class="nav-link">Inicio</a></div>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle">Béisbol ▼</a>
+            <div class="dropdown-content">
+                <a href="beisbol.html?liga=Juvenil UCV">Juvenil UCV</a>
+                <a href="beisbol.html?liga=Limenor">Limenor</a>
+                <a href="beisbol.html?liga=Monumental">Monumental</a>
+                <a href="beisbol.html?liga=Popular">Popular</a>
+                <a href="beisbol.html?liga=Unimet">Unimet</a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle">Sóftbol ▼</a>
+            <div class="dropdown-content">
+                <a href="softbol.html?liga=Chato Candela">Chato Candela</a>
+                <a href="softbol.html?liga=Intervecinal">Intervecinal</a>
+            </div>
+        </div>
+        <div class="nav-item"><a href="reglas.html" class="nav-link">Reglas</a></div>
+        <div class="nav-item"><a href="quienes-somos.html" class="nav-link">Quienes somos</a></div>
+    </nav>
+
+    <div class="boxscore-container" id="boxscore-container">
+        <!-- El contenido se llenará dinámicamente con JavaScript -->
+    </div>
+
+    <footer>
+        <h3>📞 Contactos</h3>
+        <p>📧 ligadeanotadores@hotmail.com</p>
+        <p>📱 @ligadeanotadores</p>
+        <p>📞 0212 484 0387</p>
+        <div class="redes">
+            <span>⚾ X</span>
+            <span>📷 Instagram</span>
+            <span>💬 Telegram</span>
+        </div>
+        <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.7;">© 2025 Liga de Anotadores - Béisbol menor de Venezuela</p>
+    </footer>
+
+    <script>
+        // Obtener parámetros de URL
+        function getParametros() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                liga: urlParams.get('liga') || 'Intervecinal',
+                categoria: urlParams.get('categoria') || 'Lanzamiento lento',
+                visitante: decodeURIComponent(urlParams.get('visitante') || 'Panas del Junquito'),
+                visitante_runs: urlParams.get('visitante_runs') || '6',
+                local: decodeURIComponent(urlParams.get('local') || 'Sucre'),
+                local_runs: urlParams.get('local_runs') || '13',
+                fecha: urlParams.get('fecha') || '01/02/2025',
+                hora: urlParams.get('hora') || '9:39',
+                lugar: decodeURIComponent(urlParams.get('lugar') || 'Sierra Maestra - 23 de Enero')
+            };
+        }
+
+        // Generar datos de ejemplo para jugadores (simulación)
+        function generarJugadoresVisitantes() {
+            return [
+                { num: 25, nombre: "LEUNAN KEY", pos: "LF", vb: 3, ca: 1, h: 2, h2: 0, h3: 1, hr: 0, ci: 0, b: 0, k: 3 },
+                { num: 95, nombre: "OSWIL PAREDES", pos: "HB,3B", vb: 3, ca: 2, h: 2, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 3 },
+                { num: 5, nombre: "ALBERTO TORRES", pos: "CF", vb: 2, ca: 1, h: 1, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 3 },
+                { num: 50, nombre: "JHONATHAN SANCHEZ", pos: "C", vb: 2, ca: 0, h: 0, h2: 0, h3: 0, hr: 0, ci: 1, b: 0, k: 0 },
+                { num: 6, nombre: "YOFRAN MENDOZA", pos: "2B,SS", vb: 2, ca: 1, h: 0, h2: 0, h3: 0, hr: 0, ci: 0, b: 1, k: 0 },
+                { num: 16, nombre: "JHONATHAN LOPEZ", pos: "SS,1B,RF", vb: 2, ca: 0, h: 0, h2: 0, h3: 0, hr: 0, ci: 1, b: 0, k: 0 },
+                { num: 10, nombre: "GRIMAL TORRES JR", pos: "3B,2B", vb: 2, ca: 0, h: 0, h2: 0, h3: 0, hr: 0, ci: 1, b: 0, k: 0 },
+                { num: 19, nombre: "ALEXON CORREDO", pos: "RF,SF", vb: 2, ca: 0, h: 1, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 3 },
+                { num: 17, nombre: "GRIMAL TORRES SR", pos: "P,1B", vb: 2, ca: 0, h: 0, h2: 0, h3: 0, hr: 0, ci: 1, b: 0, k: 0 },
+                { num: 11, nombre: "YORMAN PEREZ", pos: "SF,RF,P", vb: 2, ca: 1, h: 1, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 3 }
+            ];
+        }
+
+        function generarJugadoresLocales() {
+            return [
+                { num: 23, nombre: "WILMAN MARQUEZ", pos: "SS", vb: 2, ca: 2, h: 2, h2: 1, h3: 0, hr: 0, ci: 1, b: 0, k: 0 },
+                { num: 19, nombre: "JHAN REYES", pos: "LF,CF,RF", vb: 3, ca: 2, h: 1, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 4 },
+                { num: 17, nombre: "DARWIN PUENTE", pos: "2B", vb: 3, ca: 0, h: 2, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 4 },
+                { num: 13, nombre: "WILLIAMS TORREALBA", pos: "RF,CF", vb: 3, ca: 1, h: 1, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 4 },
+                { num: 14, nombre: "ESTEBAN ROJAS", pos: "3B", vb: 3, ca: 2, h: 2, h2: 1, h3: 0, hr: 0, ci: 0, b: 0, k: 4 },
+                { num: 18, nombre: "ROBERT LEON", pos: "C,1B", vb: 2, ca: 1, h: 2, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 4 },
+                { num: 27, nombre: "DANNY MONCADA", pos: "1B,C", vb: 2, ca: 1, h: 2, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 4 },
+                { num: 14, nombre: "JHONATAN PEREZ", pos: "CF,LF", vb: 2, ca: 1, h: 2, h2: 1, h3: 0, hr: 0, ci: 0, b: 0, k: 4 },
+                { num: 53, nombre: "EMMY LOPEZ", pos: "JE", vb: 2, ca: 1, h: 1, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 4 },
+                { num: 21, nombre: "CESAR HERNANDEZ", pos: "SF", vb: 2, ca: 1, h: 0, h2: 0, h3: 0, hr: 0, ci: 0, b: 1, k: 0 },
+                { num: 41, nombre: "MARIO LARA", pos: "P", vb: 2, ca: 1, h: 1, h2: 0, h3: 0, hr: 0, ci: 0, b: 0, k: 4 }
+            ];
+        }
+
+        // Renderizar la página con los parámetros
+        function renderizarBoxScore() {
+            const params = getParametros();
+            const container = document.getElementById('boxscore-container');
+            
+            // Calcular totales
+            const visitantesJugadores = generarJugadoresVisitantes();
+            const localesJugadores = generarJugadoresLocales();
+            
+            const visitantesTotales = {
+                vb: visitantesJugadores.reduce((sum, j) => sum + j.vb, 0),
+                ca: visitantesJugadores.reduce((sum, j) => sum + j.ca, 0),
+                h: visitantesJugadores.reduce((sum, j) => sum + j.h, 0),
+                h2: visitantesJugadores.reduce((sum, j) => sum + j.h2, 0),
+                h3: visitantesJugadores.reduce((sum, j) => sum + j.h3, 0),
+                hr: visitantesJugadores.reduce((sum, j) => sum + j.hr, 0),
+                ci: visitantesJugadores.reduce((sum, j) => sum + j.ci, 0),
+                b: visitantesJugadores.reduce((sum, j) => sum + j.b, 0),
+                k: visitantesJugadores.reduce((sum, j) => sum + j.k, 0)
+            };
+            
+            const localesTotales = {
+                vb: localesJugadores.reduce((sum, j) => sum + j.vb, 0),
+                ca: localesJugadores.reduce((sum, j) => sum + j.ca, 0),
+                h: localesJugadores.reduce((sum, j) => sum + j.h, 0),
+                h2: localesJugadores.reduce((sum, j) => sum + j.h2, 0),
+                h3: localesJugadores.reduce((sum, j) => sum + j.h3, 0),
+                hr: localesJugadores.reduce((sum, j) => sum + j.hr, 0),
+                ci: localesJugadores.reduce((sum, j) => sum + j.ci, 0),
+                b: localesJugadores.reduce((sum, j) => sum + j.b, 0),
+                k: localesJugadores.reduce((sum, j) => sum + j.k, 0)
+            };
+            
+            container.innerHTML = `
+                <!-- Encabezado del juego -->
+                <div class="game-header">
+                    <h1>${params.liga}</h1>
+                    <div class="liga-info">⚾ 2024 - 2025 | ${params.categoria}</div>
+                    <div class="fecha-lugar">📅 ${params.fecha} - ${params.hora} | 🏟️ ${params.lugar}</div>
+                    <div class="fecha-lugar">🏆 TERMINADO POR DIFERENCIA DE CARRERAS (NOCAUT)</div>
+                </div>
+
+                <!-- Pizarra -->
+                <div class="pizarra">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>PIZARRA</th>
+                                <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+                                <th>C</th><th>H</th><th>E</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="equipo-nombre">${params.visitante}</td>
+                                <td>3</td><td>0</td><td>2</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td><strong>${params.visitante_runs}</strong></td>
+                                <td>9</td><td>3</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo-local-nombre">${params.local}</td>
+                                <td>4</td><td>0</td><td>9</td><td>0</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+                                <td><strong>${params.local_runs}</strong></td>
+                                <td>16</td><td>3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Box Score - dos columnas -->
+                <div class="boxscore-grid">
+                    <!-- Visitante -->
+                    <div class="team-section visitante">
+                        <div class="team-header">
+                            <h2>⚾ ${params.visitante}</h2>
+                            <span class="record">Visitante</span>
+                        </div>
+                        <div class="table-container">
+                            <table class="stats-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th><th>Jugador</th><th>POS</th><th>VB</th><th>CA</th><th>H</th><th>H2</th><th>H3</th><th>HR</th><th>CI</th><th>B</th><th>K</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${visitantesJugadores.map(j => `
+                                        <tr>
+                                            <td>${j.num}</td>
+                                            <td class="jugador-nombre">${j.nombre}</td>
+                                            <td>${j.pos}</td>
+                                            <td>${j.vb}</td><td>${j.ca}</td><td>${j.h}</td>
+                                            <td>${j.h2}</td><td>${j.h3}</td><td>${j.hr}</td>
+                                            <td>${j.ci}</td><td>${j.b}</td><td>${j.k}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                                <tfoot>
+                                    <tr style="background: #f8fafc; font-weight: 600;">
+                                        <td colspan="2">TOTALES</td>
+                                        <td></td>
+                                        <td>${visitantesTotales.vb}</td>
+                                        <td>${visitantesTotales.ca}</td>
+                                        <td>${visitantesTotales.h}</td>
+                                        <td>${visitantesTotales.h2}</td>
+                                        <td>${visitantesTotales.h3}</td>
+                                        <td>${visitantesTotales.hr}</td>
+                                        <td>${visitantesTotales.ci}</td>
+                                        <td>${visitantesTotales.b}</td>
+                                        <td>${visitantesTotales.k}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Local (rojo) -->
+                    <div class="team-section local">
+                        <div class="team-header">
+                            <h2>⚾ ${params.local}</h2>
+                            <span class="record">Home Club</span>
+                        </div>
+                        <div class="table-container">
+                            <table class="stats-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th><th>Jugador</th><th>POS</th><th>VB</th><th>CA</th><th>H</th><th>H2</th><th>H3</th><th>HR</th><th>CI</th><th>B</th><th>K</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${localesJugadores.map(j => `
+                                        <tr>
+                                            <td>${j.num}</td>
+                                            <td class="jugador-nombre">${j.nombre}</td>
+                                            <td>${j.pos}</td>
+                                            <td>${j.vb}</td><td>${j.ca}</td><td>${j.h}</td>
+                                            <td>${j.h2}</td><td>${j.h3}</td><td>${j.hr}</td>
+                                            <td>${j.ci}</td><td>${j.b}</td><td>${j.k}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                                <tfoot>
+                                    <tr style="background: #f8fafc; font-weight: 600;">
+                                        <td colspan="2">TOTALES</td>
+                                        <td></td>
+                                        <td>${localesTotales.vb}</td>
+                                        <td>${localesTotales.ca}</td>
+                                        <td>${localesTotales.h}</td>
+                                        <td>${localesTotales.h2}</td>
+                                        <td>${localesTotales.h3}</td>
+                                        <td>${localesTotales.hr}</td>
+                                        <td>${localesTotales.ci}</td>
+                                        <td>${localesTotales.b}</td>
+                                        <td>${localesTotales.k}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lanzadores -->
+                <div class="pitchers-section">
+                    <div class="pitchers-header">
+                        <h3>📊 PITCHERS</h3>
+                    </div>
+                    <div class="pitchers-grid">
+                        <div class="pitcher-card">
+                            <div class="pitcher-name">#17 GRIMAL TORRES SR</div>
+                            <div class="pitcher-stats">
+                                <div class="pitcher-stat"><span class="label">Perdedor</span><br><span class="value">-</span></div>
+                                <div class="pitcher-stat"><span class="label">NP</span><br><span class="value">2</span></div>
+                                <div class="pitcher-stat"><span class="label">IP</span><br><span class="value">21</span></div>
+                                <div class="pitcher-stat"><span class="label">VB</span><br><span class="value">14</span></div>
+                                <div class="pitcher-stat"><span class="label">H</span><br><span class="value">11</span></div>
+                                <div class="pitcher-stat"><span class="label">C</span><br><span class="value">10</span></div>
+                                <div class="pitcher-stat"><span class="label">CL</span><br><span class="value">1</span></div>
+                                <div class="pitcher-stat"><span class="label">BB</span><br><span class="value">0</span></div>
+                            </div>
+                        </div>
+                        <div class="pitcher-card">
+                            <div class="pitcher-name">#11 YORMAN PEREZ</div>
+                            <div class="pitcher-stats">
+                                <div class="pitcher-stat"><span class="label">NP</span><br><span class="value">1</span></div>
+                                <div class="pitcher-stat"><span class="label">IP</span><br><span class="value">5</span></div>
+                                <div class="pitcher-stat"><span class="label">VB</span><br><span class="value">2</span></div>
+                                <div class="pitcher-stat"><span class="label">H</span><br><span class="value">2</span></div>
+                                <div class="pitcher-stat"><span class="label">C</span><br><span class="value">1</span></div>
+                                <div class="pitcher-stat"><span class="label">CL</span><br><span class="value">0</span></div>
+                                <div class="pitcher-stat"><span class="label">BB</span><br><span class="value">0</span></div>
+                                <div class="pitcher-stat"><span class="label">K</span><br><span class="value">0</span></div>
+                            </div>
+                        </div>
+                        <div class="pitcher-card">
+                            <div class="pitcher-name">#41 MARIO LARA (Ganador)</div>
+                            <div class="pitcher-stats">
+                                <div class="pitcher-stat"><span class="label">NP</span><br><span class="value">4</span></div>
+                                <div class="pitcher-stat"><span class="label">IP</span><br><span class="value">22</span></div>
+                                <div class="pitcher-stat"><span class="label">VB</span><br><span class="value">9</span></div>
+                                <div class="pitcher-stat"><span class="label">H</span><br><span class="value">6</span></div>
+                                <div class="pitcher-stat"><span class="label">C</span><br><span class="value">4</span></div>
+                                <div class="pitcher-stat"><span class="label">CL</span><br><span class="value">0</span></div>
+                                <div class="pitcher-stat"><span class="label">BB</span><br><span class="value">1</span></div>
+                                <div class="pitcher-stat"><span class="label">K</span><br><span class="value">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bateador Destacado -->
+                <div class="destacado">
+                    <div class="destacado-icono">⭐</div>
+                    <div class="destacado-info">
+                        <h4>BATEADOR DESTACADO</h4>
+                        <p>#23 WILMAN MARQUEZ (${params.local}) - 2 VB, 2 CA, 2 H, 1 H2, 1 CI</p>
+                    </div>
+                </div>
+
+                <!-- Información del juego -->
+                <div class="game-info">
+                    <div class="info-item">
+                        <div class="info-label">TIEMPO</div>
+                        <div class="info-value">0:53</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">ARBITRO PRINCIPAL</div>
+                        <div class="info-value">DAVID DAVILA</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">ARBITRO AUXILIAR</div>
+                        <div class="info-value">JOVANNY SOSA</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">ANOTADOR</div>
+                        <div class="info-value">HUMMERLY'S PRIMERA C</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Ejecutar al cargar la página
+        document.addEventListener('DOMContentLoaded', renderizarBoxScore);
+    </script>
+</body>
+</html>

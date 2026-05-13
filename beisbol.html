@@ -223,62 +223,6 @@
             gap: 0.8rem;
         }
 
-        .partido-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background: #f8fafc;
-            border-radius: 10px;
-            border: 1px solid #e5e7eb;
-            transition: 0.2s;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .partido-item:hover {
-            border-color: var(--primary-blue);
-            background: white;
-        }
-
-        .partido-equipos {
-            flex: 2;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            min-width: 200px;
-        }
-
-        .partido-equipo {
-            font-weight: 600;
-        }
-
-        .partido-vs {
-            color: var(--primary-blue);
-            font-weight: 700;
-        }
-
-        .partido-resultado {
-            font-weight: 700;
-            font-size: 1.1rem;
-            min-width: 80px;
-            text-align: center;
-        }
-
-        .partido-lugar {
-            flex: 1;
-            color: #64748b;
-            font-size: 0.9rem;
-            min-width: 150px;
-        }
-
-        .partido-fecha {
-            flex: 1;
-            color: #64748b;
-            font-size: 0.9rem;
-            text-align: right;
-            min-width: 120px;
-        }
-
         .badge-posicion {
             display: inline-block;
             background: var(--secondary-blue);
@@ -292,16 +236,6 @@
         @media (max-width: 768px) {
             .liga-container {
                 flex-direction: column;
-            }
-            
-            .partido-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .partido-equipos, .partido-resultado, .partido-lugar, .partido-fecha {
-                width: 100%;
-                text-align: left;
             }
             
             .subnav, .subnav-secundario, .selector-temporadas {
@@ -329,113 +263,119 @@
             top: 100%;
             margin-top: 0;
         }
+
         /* Estilos para el calendario */
-.partido-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background: #f8fafc;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-    transition: 0.2s;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
+        .partido-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            transition: 0.2s;
+            flex-wrap: wrap;
+            gap: 1rem;
+            text-decoration: none;
+            color: inherit;
+        }
 
-.partido-item:hover {
-    border-color: var(--primary-blue);
-    background: white;
-}
+        .partido-item:hover {
+            border-color: var(--primary-blue);
+            background: white;
+            cursor: pointer;
+            transform: translateX(5px);
+        }
 
-.partido-equipos {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-}
+        .partido-equipos {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
 
-.partido-equipo {
-    font-weight: 600;
-    color: var(--black);
-}
+        .partido-equipo {
+            font-weight: 600;
+            color: var(--black);
+        }
 
-.partido-resultado-numero {
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: var(--primary-blue);
-    background: white;
-    padding: 0.2rem 0.6rem;
-    border-radius: 8px;
-    min-width: 40px;
-    text-align: center;
-}
+        .partido-resultado-numero {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            background: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+            min-width: 40px;
+            text-align: center;
+        }
 
-.partido-guion {
-    font-weight: 800;
-    color: #64748b;
-    font-size: 1.1rem;
-}
+        .partido-guion {
+            font-weight: 800;
+            color: #64748b;
+            font-size: 1.1rem;
+        }
 
-.partido-lugar {
-    flex: 1;
-    color: #64748b;
-    font-size: 0.9rem;
-    min-width: 150px;
-}
+        .partido-lugar {
+            flex: 1;
+            color: #64748b;
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
 
-.partido-fecha {
-    color: #64748b;
-    font-size: 0.9rem;
-    min-width: 100px;
-    text-align: right;
-}
+        .partido-fecha {
+            color: #64748b;
+            font-size: 0.9rem;
+            min-width: 100px;
+            text-align: right;
+        }
 
-@media (max-width: 768px) {
-    .partido-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .partido-equipos {
-        width: 100%;
-        justify-content: flex-start;
-    }
-    
-    .partido-lugar, .partido-fecha {
-        width: 100%;
-        text-align: left;
-    }
-}
+        .partidos-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
 
-/* Calendario */
-.partidos-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
+        /* Reseña más larga con altura mínima */
+        .resena-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e5e7eb;
+            min-height: 350px;
+        }
 
-.partido-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background: #f8fafc;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-    transition: 0.2s;
-    flex-wrap: wrap;
-    gap: 1rem;
-    text-decoration: none;
-    color: inherit;
-}
+        .resena-container h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-.partido-item:hover {
-    border-color: var(--primary-blue);
-    background: white;
-    cursor: pointer;
-    transform: translateX(5px);
-}
+        .resena-texto {
+            color: #334155;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        @media (max-width: 768px) {
+            .partido-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .partido-equipos {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .partido-lugar, .partido-fecha {
+                width: 100%;
+                text-align: left;
+            }
+        }
     </style>
 </head>
 <body>
@@ -487,24 +427,29 @@
                 <button class="temporada-btn active" onclick="seleccionarTemporada('2024-2025')">2024-2025</button>
             </div>
 
-            <div class="subnav">
-                <button class="subnav-btn" onclick="mostrarSeccion('calendario')">📅 Calendario</button>
-                <button class="subnav-btn" onclick="mostrarSeccion('lideres')">📊 Líderes</button>
-                <button class="subnav-btn" onclick="mostrarSeccion('jugadores')">👥 Jugadores</button>
+            <!-- Reseña de la liga (visible cuando no hay categoría seleccionada) -->
+            <div id="resena-liga" class="resena-container"></div>
+
+            <!-- Sub-navegación (oculta hasta seleccionar categoría) -->
+            <div id="subnav-container" style="display: none;">
+                <div class="subnav">
+                    <button class="subnav-btn" id="btn-calendario" onclick="mostrarSeccion('calendario')">📅 Calendario</button>
+                    <button class="subnav-btn" id="btn-lideres" onclick="mostrarSeccion('lideres')">📊 Líderes</button>
+                    <button class="subnav-btn" id="btn-jugadores" onclick="mostrarSeccion('jugadores')">👥 Jugadores</button>
+                </div>
             </div>
 
-            <!-- Reseña de la categoría -->
-            <div id="resena-container" class="resena-container"></div>
-
-            <!-- Posición de equipos (minimizable) -->
-            <div id="posicion-equipos" class="posicion-equipos">
+            <!-- Posición de equipos (minimizable) - visible al seleccionar categoría -->
+            <div id="posicion-equipos" class="posicion-equipos" style="display: none;">
                 <div class="posicion-header" onclick="togglePosicion()">
-                    <h3><span>📊</span> Posición de equipos - <span id="categoria-actual">Juvenil</span></h3>
+                    <h3><span>📊</span> Posición de equipos - <span id="categoria-actual"></span></h3>
                     <span class="posicion-toggle">▼</span>
                 </div>
                 <div class="posicion-contenido">
                     <table class="posiciones-tabla" id="tabla-posiciones">
-                        <thead><tr><th>#</th><th>Equipo</th><th>JJ</th><th>G</th><th>E</th><th>P</th><th>AVE</th></tr></thead>
+                        <thead>
+                            <tr><th>#</th><th>Equipo</th><th>JJ</th><th>G</th><th>E</th><th>P</th><th>AVE</th></tr>
+                        </thead>
                         <tbody id="posiciones-body"></tbody>
                     </table>
                 </div>
@@ -558,7 +503,7 @@
                 </div>
                 <div class="table-container">
                     <table class="data-table" id="tabla-jugadores">
-                        <thead><tr><th>Jugador</th><th>Equipo</th><th>Posición</th><th>Batea</th><th>Lanza</th><th>#</th></tr></thead>
+                        <thead></tr><th>Jugador</th><th>Equipo</th><th>Posición</th><th>Batea</th><th>Lanza</th><th>#</th></tr></thead>
                         <tbody id="tabla-jugadores-body"></tbody>
                     </table>
                 </div>
@@ -576,27 +521,27 @@
     </footer>
 
     <script>
-        // Datos de ligas
+        // Datos de ligas con reseñas más largas
         const ligasData = {
             "Juvenil UCV": { 
                 categorias: ["Juvenil"],
-                reseña: "La Liga Juvenil UCV es el torneo más prestigioso del circuito universitario, reuniendo a las mejores universidades del país en una competencia de alto nivel."
+                reseña: "La Liga Juvenil UCV es el torneo más prestigioso del circuito universitario venezolano. Fundada en 2010, esta liga reúne a las mejores universidades del país en una competencia de alto nivel que ha visto nacer a grandes talentos del béisbol profesional. Cada temporada, más de 100 jóvenes atletas demuestran su pasión y habilidades en el diamante, representando con orgullo los colores de sus casas de estudio. La liga se ha consolidado como el principal semillero universitario del béisbol venezolano, con un formato de competencia que incluye temporada regular y emocionantes playoffs. Los juegos se disputan en los mejores estadios universitarios del país, con un ambiente que combina el espíritu deportivo y la tradición académica. La Juvenil UCV no solo forma peloteros, sino líderes que llevan el nombre de sus universidades a lo más alto del béisbol nacional e internacional."
             },
             "Limenor": { 
                 categorias: ["Semillita", "Preparatorio", "Preinfantil", "Infantil", "Prejunior", "Junior", "Superior"],
-                reseña: "Limenor es una de las ligas más completas del béisbol menor, con categorías que abarcan desde los 7 años hasta la categoría Superior, formando talentos desde la base."
+                reseña: "Limenor es una de las ligas más completas y prestigiosas del béisbol menor venezolano. Con más de 15 años de trayectoria, esta organización ha sido fundamental en la formación de cientos de jóvenes talentos que hoy brillan en el béisbol profesional. La liga cuenta con categorías que abarcan desde los 7 años hasta la categoría Superior, ofreciendo un programa de desarrollo integral que incluye entrenamiento técnico, formación en valores y competencias de alto nivel. Cada año, más de 500 niños y jóvenes participan en sus torneos, distribuidos en más de 40 equipos afiliados. Limenor se destaca por su metodología de enseñanza, sus instalaciones de primer nivel y un cuerpo de instructores altamente calificados. La liga ha sido reconocida como el semillero oficial de varias organizaciones profesionales, y sus graduados han llegado a las Grandes Ligas, la LVBP y otras ligas internacionales. La filosofía de Limenor se basa en el desarrollo del jugador integral, combinando la excelencia deportiva con la educación y los valores humanos."
             },
             "Monumental": { 
                 categorias: ["Preparatorio", "Preinfantil", "Infantil", "Prejunior", "Junior", "Ascenso"],
-                reseña: "La Liga Monumental es reconocida por su alto nivel competitivo y por ser semillero de grandes promesas del béisbol venezolano."
+                reseña: "La Liga Monumental es reconocida como la categoría de élite dentro del béisbol menor venezolano. Creada en 2015, esta liga ha sido el escenario donde se han forjado algunas de las más grandes promesas del béisbol nacional. Con un nivel competitivo excepcional, la Monumental reúne a los mejores equipos y talentos de todo el país, ofreciendo un espectáculo deportivo de primer nivel. La liga se caracteriza por su riguroso sistema de scouting, sus instalaciones de primera calidad y un cuerpo arbitral altamente profesional. Cada temporada, más de 300 jugadores compiten en sus diferentes categorías, buscando no solo el campeonato sino también la oportunidad de ser vistos por cazatalentos de organizaciones nacionales e internacionales. La Liga Monumental ha producido decenas de jugadores que han firmado contratos profesionales, incluyendo varios que han llegado a las Grandes Ligas. Su formato de competencia incluye una exigente temporada regular de 60 juegos, seguida de un sistema de playoffs que corona al campeón absoluto del béisbol menor venezolano."
             },
             "Popular": { 
                 categorias: ["Superior", "Master"],
-                reseña: "La Liga Popular destaca por su espíritu comunitario y por promover el béisbol en todas las edades, con categorías Superior y Master."
+                reseña: "La Liga Popular es el espacio donde el béisbol comunitario alcanza su máxima expresión. Fundada con el objetivo de promover el deporte en todas las edades, esta liga ofrece categorías Superior (18-25 años) y Master (26 años en adelante), permitiendo que jugadores de diferentes generaciones puedan seguir disfrutando y compitiendo en el béisbol. La liga se ha convertido en un pilar fundamental de las comunidades donde opera, fomentando valores como el trabajo en equipo, la disciplina y el respeto. Cada temporada, más de 200 jugadores participan en sus torneos, que se disputan en los campos de béisbol de las diferentes comunidades. La Liga Popular se enorgullece de ser un espacio inclusivo donde el amor por el béisbol trasciende edades y niveles de experiencia. Muchos de sus jugadores han sido ex peloteros profesionales que continúan su legado en el diamante, compartiendo su experiencia y conocimiento con las nuevas generaciones. La liga también ha sido un semillero importante para la formación de coaches, árbitros y administradores deportivos que contribuyen al desarrollo del béisbol base en Venezuela."
             },
             "Unimet": { 
                 categorias: ["Senior"],
-                reseña: "La Liga Senior de la UNIMET es el espacio donde los estudiantes universitarios demuestran su talento y pasión por el béisbol."
+                reseña: "La Liga Senior de la UNIMET es una competencia exclusiva para estudiantes universitarios que combina la excelencia académica con la pasión por el béisbol. Esta liga, que se disputa anualmente en las instalaciones deportivas de la Universidad Metropolitana, reúne a los mejores talentos de la comunidad universitaria en un ambiente de sana competencia y camaradería. Los participantes representan a las diferentes escuelas y facultades de la universidad, creando un sentido de pertenencia y orgullo institucional. La liga se ha convertido en una tradición dentro del calendario deportivo universitario, atrayendo a cientos de espectadores en cada juego. Además del aspecto competitivo, la Liga Senior UNIMET promueve valores como el liderazgo, la disciplina y el trabajo en equipo, formando no solo mejores atletas sino también mejores profesionales. Muchos de sus participantes han continuado su carrera en el béisbol aficionado y profesional, llevando el nombre de la universidad a lo más alto. La liga es organizada por la dirección de deportes de la UNIMET, con el apoyo de exalumnos y patrocinadores que creen en el poder transformador del deporte universitario."
             }
         };
 
@@ -631,75 +576,91 @@
         const lugares = ["Estadio Monumental", "Estadio Universitario", "Parque Deportivo", "Campo Central", "Estadio de la Juventud", "Complejo Deportivo"];
 
         let ligaSeleccionada = "Juvenil UCV";
-        let categoriaSeleccionada = "Juvenil";
-        let seccionActiva = null;
+        let categoriaSeleccionada = null; // Inicia sin categoría seleccionada
 
         function togglePosicion() {
             const panel = document.getElementById('posicion-equipos');
-            panel.classList.toggle('minimizado');
+            if (panel.style.display !== 'none') {
+                panel.classList.toggle('minimizado');
+            }
         }
 
         function cambiarLiga(liga) {
             ligaSeleccionada = liga;
-            const categorias = ligasData[liga].categorias;
-            categoriaSeleccionada = categorias[0];
+            categoriaSeleccionada = null; // Resetear categoría seleccionada
+            
             document.getElementById('liga-header').textContent = liga;
             
-            // Resetear sección activa a null para mostrar reseña y posición
-            seccionActiva = null;
+            // Mostrar reseña de la liga, ocultar subnav y posición de equipos
+            mostrarResenaLiga();
+            ocultarSubnavYPosicion();
             
-            // Ocultar todas las secciones
+            // Actualizar sidebar de categorías (sin categoría activa)
+            cargarCategorias();
+        }
+
+        function mostrarResenaLiga() {
+            const container = document.getElementById('resena-liga');
+            const reseña = ligasData[ligaSeleccionada].reseña;
+            container.innerHTML = `
+                <h3><span>📖</span> ${ligaSeleccionada}</h3>
+                <div class="resena-texto">${reseña}</div>
+            `;
+            container.style.display = 'block';
+        }
+
+        function ocultarSubnavYPosicion() {
+            document.getElementById('subnav-container').style.display = 'none';
+            document.getElementById('posicion-equipos').style.display = 'none';
             document.getElementById('seccion-calendario').style.display = 'none';
             document.getElementById('seccion-lideres').style.display = 'none';
             document.getElementById('seccion-jugadores').style.display = 'none';
-            
-            // Quitar active de los botones del subnav
-            document.querySelectorAll('.subnav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Mostrar reseña y posición de equipos (expandida)
-            document.getElementById('resena-container').style.display = 'block';
+        }
+
+        function mostrarSubnavYPosicion() {
+            document.getElementById('subnav-container').style.display = 'block';
+            document.getElementById('posicion-equipos').style.display = 'block';
             document.getElementById('posicion-equipos').classList.remove('minimizado');
-            
-            cargarCategorias();
-            actualizarResena();
-            actualizarPosiciones();
-            actualizarCalendario();
-            actualizarTablasLideres();
-            actualizarTablaJugadores();
         }
 
         function cargarCategorias() {
             const container = document.getElementById('categorias-lista');
+            const categorias = ligasData[ligaSeleccionada].categorias;
+            
             container.innerHTML = '<ul class="categorias-lista">' + 
-                ligasData[ligaSeleccionada].categorias.map(cat => 
+                categorias.map(cat => 
                     `<li><a href="#" class="${cat === categoriaSeleccionada ? 'active' : ''}" onclick="seleccionarCategoria('${cat}'); return false;">${cat}</a></li>`
                 ).join('') + '</ul>';
         }
 
         function seleccionarCategoria(categoria) {
             categoriaSeleccionada = categoria;
+            
+            // Actualizar clase active en la lista de categorías
+            document.querySelectorAll('.categorias-lista a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Ocultar reseña de la liga
+            document.getElementById('resena-liga').style.display = 'none';
+            
+            // Mostrar subnav y posición de equipos
+            mostrarSubnavYPosicion();
+            
+            // Actualizar título de categoría
             document.getElementById('categoria-actual').textContent = categoria;
-            cargarCategorias();
-            actualizarResena();
+            document.getElementById('categoria-jugadores').textContent = categoria;
+            document.getElementById('liga-jugadores').textContent = ligaSeleccionada;
+            
+            // Actualizar datos
             actualizarPosiciones();
             actualizarCalendario();
             actualizarTablasLideres();
             actualizarTablaJugadores();
-        }
-
-        function actualizarResena() {
-            const container = document.getElementById('resena-container');
-            const reseña = ligasData[ligaSeleccionada].reseña;
-            container.innerHTML = `
-                <h3><span>📖</span> Reseña - ${ligaSeleccionada} - ${categoriaSeleccionada}</h3>
-                <div class="resena-texto">${reseña} La categoría ${categoriaSeleccionada} reúne a los mejores equipos de esta división, compitiendo por el título de campeón.</div>
-            `;
-        }
-
-        function getEquiposActuales() {
-            return equiposPorLiga[ligaSeleccionada]?.[categoriaSeleccionada] || ["Equipo A", "Equipo B", "Equipo C"];
+            
+            // Seleccionar Calendario por defecto y mostrar la sección
+            mostrarSeccion('calendario');
         }
 
         function actualizarPosiciones() {
@@ -732,7 +693,6 @@
                 const fecha = `${dia}/${mes}/2026`;
                 const fechaCompleta = `${dia}/${mes}/2026`;
                 
-                // Construir URL para box-score
                 const boxScoreUrl = `box-score.html?liga=${encodeURIComponent(ligaSeleccionada)}&categoria=${encodeURIComponent(categoriaSeleccionada)}&local=${encodeURIComponent(e1)}&local_runs=${runs1}&visitante=${encodeURIComponent(e2)}&visitante_runs=${runs2}&fecha=${encodeURIComponent(fechaCompleta)}&lugar=${encodeURIComponent(lugar)}`;
                 
                 container.innerHTML += `
@@ -769,33 +729,27 @@
                     jugadores.push({ nombre: `Jugador ${i + 1}`, equipo: equipo, posicion: posiciones[Math.floor(Math.random() * posiciones.length)], batea: manos[Math.floor(Math.random() * manos.length)], lanza: manos[Math.floor(Math.random() * manos.length)], numero: Math.floor(Math.random() * 99) + 1 });
                 }
             });
-            document.getElementById('liga-jugadores').textContent = ligaSeleccionada;
-            document.getElementById('categoria-jugadores').textContent = categoriaSeleccionada;
             const selectEquipo = document.getElementById('filtro-equipo-jugadores');
             selectEquipo.innerHTML = '<option value="todos">Todos los equipos</option>';
             equipos.forEach(e => selectEquipo.innerHTML += `<option value="${e}">${e}</option>`);
             document.getElementById('tabla-jugadores-body').innerHTML = jugadores.map(j => `<tr><td><strong>${j.nombre}</strong></td><td>${j.equipo}</td><td><span class="badge-posicion">${j.posicion}</span></td><td>${j.batea}</td><td>${j.lanza}</td><td>${j.numero}</td></tr>`).join('');
         }
 
-        function seleccionarTemporada(temporada) {
-            // Función vacía porque el selector está oculto
+        function getEquiposActuales() {
+            return equiposPorLiga[ligaSeleccionada]?.[categoriaSeleccionada] || ["Equipo A", "Equipo B", "Equipo C"];
         }
 
         function mostrarSeccion(seccion) {
-            // Marcar sección activa
-            seccionActiva = seccion;
-            
-            // Actualizar botones
+            // Actualizar botones activos
             document.querySelectorAll('.subnav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
             
-            // Ocultar reseña
-            document.getElementById('resena-container').style.display = 'none';
-            
-            // Minimizar tabla de posiciones
-            document.getElementById('posicion-equipos').classList.add('minimizado');
+            // Activar el botón correspondiente
+            const btnActivo = document.getElementById(`btn-${seccion}`);
+            if (btnActivo) {
+                btnActivo.classList.add('active');
+            }
             
             // Ocultar todas las secciones
             document.getElementById('seccion-calendario').style.display = 'none';
@@ -804,6 +758,9 @@
             
             // Mostrar la sección seleccionada
             document.getElementById(`seccion-${seccion}`).style.display = 'block';
+            
+            // Minimizar tabla de posiciones
+            document.getElementById('posicion-equipos').classList.add('minimizado');
         }
 
         function mostrarSubLideres(tipo) {
@@ -815,13 +772,15 @@
             document.getElementById('subseccion-picheo').style.display = tipo === 'picheo' ? 'block' : 'none';
         }
 
+        function seleccionarTemporada(temporada) {
+            // Función vacía
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             cargarCategorias();
-            actualizarResena();
-            actualizarPosiciones();
-            actualizarCalendario();
-            actualizarTablasLideres();
-            actualizarTablaJugadores();
+            mostrarResenaLiga();
+            ocultarSubnavYPosicion();
+            
             document.getElementById('filtro-equipo-jugadores').addEventListener('change', () => actualizarTablaJugadores());
             document.getElementById('filtro-posicion-jugadores').addEventListener('change', () => actualizarTablaJugadores());
         });
